@@ -1,6 +1,7 @@
 import { motion, useAnimation } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import AnimatedText from '../components/AnimatedText';
 import ProjectCard from '../components/ProjectCard';
 import SkillBar from '../components/SkillBar';
 
@@ -136,30 +137,6 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
           ))}
         </motion.div>
       </div>
-
-      <motion.div 
-        className="mb-16 text-center"
-        initial="hidden"
-        animate={controls}
-        variants={{
-          hidden: { opacity: 0, y: 20 },
-          visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-        }}
-      >
-        <motion.h2 
-          className="text-3xl md:text-4xl font-bold mb-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <span className="text-primary-500">Skills</span> & Projects
-        </motion.h2>
-        <AnimatedText 
-          text="Technical expertise and showcase of recent work"
-          className="text-gray-300 text-lg max-w-2xl mx-auto"
-          delay={0.3}
-        />
-      </motion.div>
 
       <motion.h3 
         className="text-2xl font-semibold mb-8 text-center"
