@@ -67,6 +67,30 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
       ref={ref}
       className="container mx-auto px-6 py-20"
     >
+      <motion.div 
+        className="mb-16 text-center"
+        initial="hidden"
+        animate={controls}
+        variants={{
+          hidden: { opacity: 0, y: 20 },
+          visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+        }}
+      >
+        <motion.h2 
+          className="text-3xl md:text-4xl font-bold mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <span className="text-primary-500">Skills</span> & Projects
+        </motion.h2>
+        <AnimatedText 
+          text="Technical expertise and showcase of recent work"
+          className="text-gray-300 text-lg max-w-2xl mx-auto"
+          delay={0.3}
+        />
+      </motion.div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-20">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
@@ -124,7 +148,7 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
         Featured Projects
       </motion.h3>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project, index) => (
           <ProjectCard
             key={index}
@@ -139,32 +163,6 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
           />
         ))}
       </div>
-
-      <motion.div 
-        className="text-center"
-        initial="hidden"
-        animate={controls}
-        variants={{
-          hidden: { opacity: 0, y: 20 },
-          visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-        }}
-      >
-        <motion.h2 
-          className="text-3xl md:text-4xl font-bold mb-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <span className="text-primary-500">Skills</span> & Projects
-        </motion.h2>
-        <div className="overflow-hidden flex flex-wrap text-gray-300 text-lg max-w-2xl mx-auto">
-          <AnimatedText 
-            text="Technical expertise and showcase of recent work"
-            className="text-gray-300 text-lg"
-            delay={0.3}
-          />
-        </div>
-      </motion.div>
     </div>
   );
 };
