@@ -80,18 +80,24 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
         }}
       >
         <motion.h2 
-          className="text-3xl md:text-4xl font-bold mb-4"
+          className="text-3xl md:text-4xl font-bold mb-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
           <span className="text-primary-500">Get in</span> Touch
         </motion.h2>
+        <motion.div
+          className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto mb-6"
+          initial={{ width: 0 }}
+          animate={{ width: 96 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+        />
         <motion.p 
           className="text-gray-300 text-lg max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: 0.6 }}
         >
           Let's connect and discuss opportunities, collaborations, or just have a friendly chat about technology
         </motion.p>

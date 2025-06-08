@@ -146,15 +146,16 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
           visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
         }}
       >
-        <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full">
+        <div className="relative w-72 h-72 md:w-96 md:h-96">
           <motion.div
-            className="absolute inset-0 rounded-full overflow-hidden border-4 border-primary-500 bg-dark-200"
+            className="absolute inset-0 rounded-full overflow-hidden border-4 border-primary-500 bg-dark-200 shadow-2xl"
             whileHover={{ scale: 1.05 }}
+            transition={{ type: 'spring', stiffness: 300 }}
           >
             <img
               src="./Profile.jpg"
               alt="P. Bharath Kumar Reddy"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-center"
               onError={(e) => {
                 console.log('Image failed to load:', e);
                 // Fallback to a placeholder or hide the image
@@ -165,21 +166,31 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
 
           {/* Tech stack circles */}
           <motion.div
-            className="absolute -top-4 -right-4 w-16 h-16 bg-dark-200 rounded-full flex items-center justify-center border-2 border-primary-500"
+            className="absolute -top-6 -right-6 w-20 h-20 bg-dark-200 rounded-full flex items-center justify-center border-4 border-primary-500 shadow-lg"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 1.2, type: 'spring' }}
           >
-            <Code size={24} className="text-primary-500" />
+            <Code size={28} className="text-primary-500" />
           </motion.div>
 
           <motion.div
-            className="absolute -bottom-4 -left-4 w-16 h-16 bg-dark-200 rounded-full flex items-center justify-center border-2 border-primary-500"
+            className="absolute -bottom-6 -left-6 w-20 h-20 bg-dark-200 rounded-full flex items-center justify-center border-4 border-primary-500 shadow-lg"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 1.4, type: 'spring' }}
           >
-            <Server size={24} className="text-primary-500" />
+            <Server size={28} className="text-primary-500" />
+          </motion.div>
+
+          {/* Floating elements */}
+          <motion.div
+            className="absolute top-1/4 -left-8 w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center shadow-lg"
+            initial={{ scale: 0, rotate: 0 }}
+            animate={{ scale: 1, rotate: 360 }}
+            transition={{ delay: 1.6, type: 'spring', duration: 1 }}
+          >
+            <Database size={24} className="text-white" />
           </motion.div>
         </div>
       </motion.div>

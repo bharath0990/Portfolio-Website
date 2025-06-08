@@ -83,14 +83,11 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
         >
           <span className="text-primary-500">Skills</span> & Projects
         </motion.h2>
-        <motion.p 
+        <AnimatedText 
+          text="Technical expertise and showcase of recent work"
           className="text-gray-300 text-lg max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-        >
-          Technical expertise and showcase of recent work
-        </motion.p>
+          delay={0.3}
+        />
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-20">
@@ -139,6 +136,30 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
           ))}
         </motion.div>
       </div>
+
+      <motion.div 
+        className="mb-16 text-center"
+        initial="hidden"
+        animate={controls}
+        variants={{
+          hidden: { opacity: 0, y: 20 },
+          visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+        }}
+      >
+        <motion.h2 
+          className="text-3xl md:text-4xl font-bold mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <span className="text-primary-500">Skills</span> & Projects
+        </motion.h2>
+        <AnimatedText 
+          text="Technical expertise and showcase of recent work"
+          className="text-gray-300 text-lg max-w-2xl mx-auto"
+          delay={0.3}
+        />
+      </motion.div>
 
       <motion.h3 
         className="text-2xl font-semibold mb-8 text-center"
