@@ -153,7 +153,7 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
             transition={{ type: 'spring', stiffness: 300 }}
           >
             <img
-              src="./Profile.jpg"
+              src="./profile.jpeg"
               alt="P. Bharath Kumar Reddy"
               className="w-full h-full object-cover object-center"
               onError={(e) => {
