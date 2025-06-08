@@ -107,7 +107,7 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
 
         <div className="flex flex-wrap gap-4">
           <motion.a
-            href="./Resume.pdf"
+            href="./P.Bharath Kumar Reddy_Resume.pdf"
             download="Bharath_Kumar_Reddy_Resume.pdf"
             className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors"
             whileHover={{ scale: 1.05 }}
