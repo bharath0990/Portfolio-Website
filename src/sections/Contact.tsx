@@ -11,7 +11,6 @@ import {
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import AnimatedText from '../components/AnimatedText';
 
 interface ContactProps {
   onLinkHover: () => void;
@@ -94,7 +93,7 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          Technical expertise and showcase of recent work
+          Let's connect and discuss opportunities, collaborations, or just have a friendly chat about technology
         </motion.p>
       </motion.div>
 

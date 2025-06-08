@@ -1,7 +1,6 @@
 import { motion, useAnimation } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import AnimatedText from '../components/AnimatedText';
 import ProjectCard from '../components/ProjectCard';
 import SkillBar from '../components/SkillBar';
 
@@ -84,11 +83,14 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
         >
           <span className="text-primary-500">Skills</span> & Projects
         </motion.h2>
-        <AnimatedText 
-          text="Technical expertise and showcase of recent work"
+        <motion.p 
           className="text-gray-300 text-lg max-w-2xl mx-auto"
-          delay={0.3}
-        />
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          Technical expertise and showcase of recent work
+        </motion.p>
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-20">
