@@ -13,7 +13,11 @@ import {
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { initializeEmailJS, sendContactEmail, type ContactFormData } from '../services/emailService';
+import {
+  initializeEmailJS,
+  sendContactEmail,
+  type ContactFormData
+} from '../services/emailService';
 
 interface ContactProps {
   onLinkHover: () => void;
@@ -24,10 +28,11 @@ interface ContactProps {
 const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
   const controls = useAnimation();
   const [ref, inView] = useInView({ threshold: 0.1 });
+
   const [formState, setFormState] = useState<ContactFormData>({
     name: '',
     email: '',
-    message: '',
+    message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -54,14 +59,17 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formState.name.trim() || !formState.email.trim() || !formState.message.trim()) {
+
+    const { name, email, message } = formState;
+
+    if (!name.trim() || !email.trim() || !message.trim()) {
       setSubmitStatus('error');
       setStatusMessage('Please fill in all fields.');
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formState.email)) {
+    if (!emailRegex.test(email)) {
       setSubmitStatus('error');
       setStatusMessage('Please enter a valid email address.');
       return;
@@ -72,16 +80,15 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
 
     try {
       const success = await sendContactEmail(formState);
-
       if (success) {
         setSubmitStatus('success');
         setStatusMessage('Thank you for your message! I will get back to you soon.');
         setFormState({ name: '', email: '', message: '' });
       } else {
         setSubmitStatus('error');
-        setStatusMessage('Failed to send message. Please try again or contact me directly via email.');
+        setStatusMessage('Failed to send message. Please try again or contact me directly.');
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
       setStatusMessage('An error occurred. Please try again later.');
     } finally {
@@ -133,12 +140,12 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
         >
-          Let's connect and discuss opportunities, collaborations, or just have a friendly chat about technology
+          Let’s connect to explore opportunities, collaborations, or just chat tech.
         </motion.p>
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-        {/* Left Side - Contact Info */}
+        {/* Contact Info */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -157,6 +164,7 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
                   whileHover={{ x: 5 }}
                   onMouseEnter={onLinkHover}
                   onMouseLeave={onLinkLeave}
+                  aria-label={item.text}
                 >
                   <div className="w-12 h-12 bg-dark-200 rounded-lg flex items-center justify-center mr-4">
                     <Icon size={20} className="text-primary-500" />
@@ -194,7 +202,7 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
           </div>
         </motion.div>
 
-        {/* Right Side - Form */}
+        {/* Contact Form */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -224,43 +232,26 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                Your Name *
-              </label>
-              <motion.input
-                type="text"
-                id="name"
-                name="name"
-                value={formState.name}
-                onChange={handleInputChange}
-                required
-                className="w-full px-4 py-3 bg-dark-200 border border-dark-100 focus:border-primary-500 rounded-lg text-white outline-none transition-colors"
-                whileFocus={{ scale: 1.01 }}
-                onMouseEnter={onLinkHover}
-                onMouseLeave={onLinkLeave}
-                disabled={isSubmitting}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                Your Email *
-              </label>
-              <motion.input
-                type="email"
-                id="email"
-                name="email"
-                value={formState.email}
-                onChange={handleInputChange}
-                required
-                className="w-full px-4 py-3 bg-dark-200 border border-dark-100 focus:border-primary-500 rounded-lg text-white outline-none transition-colors"
-                whileFocus={{ scale: 1.01 }}
-                onMouseEnter={onLinkHover}
-                onMouseLeave={onLinkLeave}
-                disabled={isSubmitting}
-              />
-            </div>
+            {['name', 'email'].map((field) => (
+              <div key={field}>
+                <label htmlFor={field} className="block text-sm font-medium text-gray-300 mb-2">
+                  Your {field.charAt(0).toUpperCase() + field.slice(1)} *
+                </label>
+                <motion.input
+                  type={field}
+                  id={field}
+                  name={field}
+                  value={formState[field as keyof ContactFormData]}
+                  onChange={handleInputChange}
+                  required
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-3 bg-dark-200 border border-dark-100 focus:border-primary-500 rounded-lg text-white outline-none transition-colors"
+                  whileFocus={{ scale: 1.01 }}
+                  onMouseEnter={onLinkHover}
+                  onMouseLeave={onLinkLeave}
+                />
+              </div>
+            ))}
 
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
@@ -273,11 +264,11 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
                 onChange={handleInputChange}
                 required
                 rows={5}
+                disabled={isSubmitting}
                 className="w-full px-4 py-3 bg-dark-200 border border-dark-100 focus:border-primary-500 rounded-lg text-white outline-none transition-colors resize-none"
                 whileFocus={{ scale: 1.01 }}
                 onMouseEnter={onLinkHover}
                 onMouseLeave={onLinkLeave}
-                disabled={isSubmitting}
               />
             </div>
 
@@ -294,16 +285,24 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
             >
               {isSubmitting ? (
                 <span className="flex items-center">
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
                   </svg>
                   Sending...
                 </span>
               ) : (
                 <span className="flex items-center">
-                  Send Message
-                  <Send size={18} className="ml-2" />
+                  Send Message <Send size={18} className="ml-2" />
                 </span>
               )}
             </motion.button>

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import React, { useEffect } from 'react';
 
 interface CursorProps {
   position: { x: number; y: number };
-  variant: string;
+  variant: 'default' | 'link';
 }
 
 const Cursor: React.FC<CursorProps> = ({ position, variant }) => {
@@ -30,7 +30,6 @@ const Cursor: React.FC<CursorProps> = ({ position, variant }) => {
       border: '1px solid rgba(14, 165, 233, 0.5)',
       x: position.x - 40,
       y: position.y - 40,
-      mixBlendMode: 'difference',
       transition: {
         type: 'spring',
         damping: 25,
@@ -39,7 +38,7 @@ const Cursor: React.FC<CursorProps> = ({ position, variant }) => {
     },
   };
 
-  // For mobile devices, don't show the cursor
+  // Hide cursor on small screens
   useEffect(() => {
     const handleResize = () => {
       const cursorEl = document.getElementById('custom-cursor');
@@ -61,6 +60,7 @@ const Cursor: React.FC<CursorProps> = ({ position, variant }) => {
     <motion.div
       id="custom-cursor"
       className="fixed top-0 left-0 pointer-events-none z-50 mix-blend-difference hidden md:block"
+      style={{ mixBlendMode: 'difference' }} // moved here from variant
       variants={cursorVariants}
       animate={variant}
     />

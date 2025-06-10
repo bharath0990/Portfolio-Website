@@ -2,7 +2,6 @@ import { motion, useAnimation } from 'framer-motion';
 import { Award, Trophy } from 'lucide-react';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import AnimatedText from '../components/AnimatedText';
 import CertificateCard from '../components/CertificateCard';
 
 interface AchievementsProps {
