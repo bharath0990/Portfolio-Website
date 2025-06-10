@@ -320,26 +320,6 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
               )}
             </motion.button>
           </form>
-
-          {/* Setup Instructions */}
-          <motion.div
-            className="mt-8 p-4 bg-dark-200 rounded-lg border border-primary-500/20"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-          >
-            <h4 className="text-sm font-semibold text-primary-400 mb-2">📧 Setup Required</h4>
-            <p className="text-xs text-gray-400 leading-relaxed">
-              To receive messages, you need to set up EmailJS:
-              <br />
-              1. Create a free account at <a href="https://emailjs.com" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline">emailjs.com</a>
-              <br />
-              2. Create an email service and template
-              <br />
-              3. Update the configuration in <code className="bg-dark-100 px-1 rounded">src/services/emailService.ts</code>
-            </p>
-          </motion.div>
-        </motion.div>
       </div>
       
       <div className="mt-20 pt-12 border-t border-dark-100 text-center">
