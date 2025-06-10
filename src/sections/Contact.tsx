@@ -1,5 +1,7 @@
 import { motion, useAnimation } from 'framer-motion';
 import {
+  AlertCircle,
+  CheckCircle,
   Github,
   Instagram,
   Linkedin,
@@ -11,6 +13,7 @@ import {
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { initializeEmailJS, sendContactEmail, type ContactFormData } from '../services/emailService';
 
 interface ContactProps {
   onLinkHover: () => void;
@@ -21,12 +24,14 @@ interface ContactProps {
 const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
   const controls = useAnimation();
   const [ref, inView] = useInView({ threshold: 0.1 });
-  const [formState, setFormState] = useState({
+  const [formState, setFormState] = useState<ContactFormData>({
     name: '',
     email: '',
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [statusMessage, setStatusMessage] = useState('');
 
   useEffect(() => {
     if (inView || isActive) {
@@ -34,22 +39,60 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
     }
   }, [controls, inView, isActive]);
 
+  useEffect(() => {
+    // Initialize EmailJS when component mounts
+    initializeEmailJS();
+  }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormState((prev) => ({ ...prev, [name]: value }));
+    
+    // Clear status when user starts typing again
+    if (submitStatus !== 'idle') {
+      setSubmitStatus('idle');
+      setStatusMessage('');
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      console.log('Form submitted:', formState);
+    // Basic validation
+    if (!formState.name.trim() || !formState.email.trim() || !formState.message.trim()) {
+      setSubmitStatus('error');
+      setStatusMessage('Please fill in all fields.');
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formState.email)) {
+      setSubmitStatus('error');
+      setStatusMessage('Please enter a valid email address.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    
+    try {
+      const success = await sendContactEmail(formState);
+      
+      if (success) {
+        setSubmitStatus('success');
+        setStatusMessage('Thank you for your message! I will get back to you soon.');
+        setFormState({ name: '', email: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+        setStatusMessage('Failed to send message. Please try again or contact me directly via email.');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setStatusMessage('An error occurred. Please try again later.');
+    } finally {
       setIsSubmitting(false);
-      setFormState({ name: '', email: '', message: '' });
-      alert('Thank you for your message! I will get back to you soon.');
-    }, 1500);
+    }
   };
 
   const socialLinks = [
@@ -142,6 +185,8 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
                 <motion.a
                   key={social.label}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`w-12 h-12 bg-dark-200 rounded-lg flex items-center justify-center text-white ${social.color} transition-colors`}
                   whileHover={{ y: -5 }}
                   whileTap={{ scale: 0.95 }}
@@ -167,10 +212,31 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
         >
           <h3 className="text-2xl font-semibold mb-6">Send Me a Message</h3>
           
+          {/* Status Message */}
+          {submitStatus !== 'idle' && (
+            <motion.div
+              className={`mb-6 p-4 rounded-lg flex items-center ${
+                submitStatus === 'success' 
+                  ? 'bg-success-500/10 border border-success-500/20 text-success-400' 
+                  : 'bg-error-500/10 border border-error-500/20 text-error-400'
+              }`}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {submitStatus === 'success' ? (
+                <CheckCircle size={20} className="mr-3 flex-shrink-0" />
+              ) : (
+                <AlertCircle size={20} className="mr-3 flex-shrink-0" />
+              )}
+              <span>{statusMessage}</span>
+            </motion.div>
+          )}
+          
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                Your Name
+                Your Name *
               </label>
               <motion.input
                 type="text"
@@ -183,12 +249,13 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
                 whileFocus={{ scale: 1.01 }}
                 onMouseEnter={onLinkHover}
                 onMouseLeave={onLinkLeave}
+                disabled={isSubmitting}
               />
             </div>
             
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                Your Email
+                Your Email *
               </label>
               <motion.input
                 type="email"
@@ -201,12 +268,13 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
                 whileFocus={{ scale: 1.01 }}
                 onMouseEnter={onLinkHover}
                 onMouseLeave={onLinkLeave}
+                disabled={isSubmitting}
               />
             </div>
             
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                Your Message
+                Your Message *
               </label>
               <motion.textarea
                 id="message"
@@ -219,22 +287,27 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
                 whileFocus={{ scale: 1.01 }}
                 onMouseEnter={onLinkHover}
                 onMouseLeave={onLinkLeave}
+                disabled={isSubmitting}
               />
             </div>
             
             <motion.button
               type="submit"
-              className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center w-full md:w-auto"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors flex items-center justify-center w-full md:w-auto ${
+                isSubmitting 
+                  ? 'bg-gray-600 cursor-not-allowed' 
+                  : 'bg-primary-600 hover:bg-primary-700'
+              } text-white`}
+              whileHover={!isSubmitting ? { scale: 1.02 } : {}}
+              whileTap={!isSubmitting ? { scale: 0.98 } : {}}
               onMouseEnter={onLinkHover}
               onMouseLeave={onLinkLeave}
               disabled={isSubmitting}
             >
               {isSubmitting ? (
                 <span className="flex items-center">
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white\" xmlns="http://www.w3.org/2000/svg\" fill="none\" viewBox="0 0 24 24">
-                    <circle className="opacity-25\" cx="12\" cy="12\" r="10\" stroke="currentColor\" strokeWidth="4"></circle>
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
                   Sending...
@@ -247,6 +320,25 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
               )}
             </motion.button>
           </form>
+
+          {/* Setup Instructions */}
+          <motion.div
+            className="mt-8 p-4 bg-dark-200 rounded-lg border border-primary-500/20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+          >
+            <h4 className="text-sm font-semibold text-primary-400 mb-2">📧 Setup Required</h4>
+            <p className="text-xs text-gray-400 leading-relaxed">
+              To receive messages, you need to set up EmailJS:
+              <br />
+              1. Create a free account at <a href="https://emailjs.com" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline">emailjs.com</a>
+              <br />
+              2. Create an email service and template
+              <br />
+              3. Update the configuration in <code className="bg-dark-100 px-1 rounded">src/services/emailService.ts</code>
+            </p>
+          </motion.div>
         </motion.div>
       </div>
       
