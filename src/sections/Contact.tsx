@@ -40,15 +40,12 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
   }, [controls, inView, isActive]);
 
   useEffect(() => {
-    // Initialize EmailJS when component mounts
     initializeEmailJS();
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormState((prev) => ({ ...prev, [name]: value }));
-    
-    // Clear status when user starts typing again
     if (submitStatus !== 'idle') {
       setSubmitStatus('idle');
       setStatusMessage('');
@@ -57,15 +54,12 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Basic validation
     if (!formState.name.trim() || !formState.email.trim() || !formState.message.trim()) {
       setSubmitStatus('error');
       setStatusMessage('Please fill in all fields.');
       return;
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formState.email)) {
       setSubmitStatus('error');
@@ -75,10 +69,10 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
 
     setIsSubmitting(true);
     setSubmitStatus('idle');
-    
+
     try {
       const success = await sendContactEmail(formState);
-      
+
       if (success) {
         setSubmitStatus('success');
         setStatusMessage('Thank you for your message! I will get back to you soon.');
@@ -109,11 +103,8 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
   ];
 
   return (
-    <div 
-      ref={ref}
-      className="container mx-auto px-6 py-20"
-    >
-      <motion.div 
+    <div ref={ref} className="container mx-auto px-6 py-20">
+      <motion.div
         className="mb-16 text-center"
         initial="hidden"
         animate={controls}
@@ -122,7 +113,7 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
           visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
         }}
       >
-        <motion.h2 
+        <motion.h2
           className="text-3xl md:text-4xl font-bold mb-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -136,7 +127,7 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
           animate={{ width: 96 }}
           transition={{ delay: 0.4, duration: 0.8 }}
         />
-        <motion.p 
+        <motion.p
           className="text-gray-300 text-lg max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -147,6 +138,7 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        {/* Left Side - Contact Info */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -154,7 +146,6 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
           viewport={{ once: true }}
         >
           <h3 className="text-2xl font-semibold mb-6">Contact Information</h3>
-          
           <div className="space-y-6 mb-8">
             {contactInfo.map((item, index) => {
               const Icon = item.icon;
@@ -175,9 +166,8 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
               );
             })}
           </div>
-          
+
           <h3 className="text-2xl font-semibold mb-6">Connect on Social Media</h3>
-          
           <div className="flex flex-wrap gap-4">
             {socialLinks.map((social, index) => {
               const Icon = social.icon;
@@ -203,7 +193,8 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
             })}
           </div>
         </motion.div>
-        
+
+        {/* Right Side - Form */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -211,13 +202,12 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
           viewport={{ once: true }}
         >
           <h3 className="text-2xl font-semibold mb-6">Send Me a Message</h3>
-          
-          {/* Status Message */}
+
           {submitStatus !== 'idle' && (
             <motion.div
               className={`mb-6 p-4 rounded-lg flex items-center ${
-                submitStatus === 'success' 
-                  ? 'bg-success-500/10 border border-success-500/20 text-success-400' 
+                submitStatus === 'success'
+                  ? 'bg-success-500/10 border border-success-500/20 text-success-400'
                   : 'bg-error-500/10 border border-error-500/20 text-error-400'
               }`}
               initial={{ opacity: 0, y: -10 }}
@@ -232,7 +222,7 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
               <span>{statusMessage}</span>
             </motion.div>
           )}
-          
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
@@ -252,7 +242,7 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
                 disabled={isSubmitting}
               />
             </div>
-            
+
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                 Your Email *
@@ -271,7 +261,7 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
                 disabled={isSubmitting}
               />
             </div>
-            
+
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
                 Your Message *
@@ -290,13 +280,11 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
                 disabled={isSubmitting}
               />
             </div>
-            
+
             <motion.button
               type="submit"
               className={`px-6 py-3 rounded-lg font-medium transition-colors flex items-center justify-center w-full md:w-auto ${
-                isSubmitting 
-                  ? 'bg-gray-600 cursor-not-allowed' 
-                  : 'bg-primary-600 hover:bg-primary-700'
+                isSubmitting ? 'bg-gray-600 cursor-not-allowed' : 'bg-primary-600 hover:bg-primary-700'
               } text-white`}
               whileHover={!isSubmitting ? { scale: 1.02 } : {}}
               whileTap={!isSubmitting ? { scale: 0.98 } : {}}
@@ -307,8 +295,8 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
               {isSubmitting ? (
                 <span className="flex items-center">
                   <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
                   Sending...
                 </span>
@@ -320,8 +308,9 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
               )}
             </motion.button>
           </form>
+        </motion.div>
       </div>
-      
+
       <div className="mt-20 pt-12 border-t border-dark-100 text-center">
         <p className="text-gray-400">
           &copy; {new Date().getFullYear()} P.Bharath Kumar Reddy. All rights reserved.
