@@ -95,8 +95,11 @@ const Achievements: React.FC<AchievementsProps> = ({ onLinkHover, onLinkLeave, i
         <motion.p 
           className="text-gray-300 text-lg max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+          animate={controls}
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.4 } },
+          }}
         >
           Recognitions for excellence and dedication in the field of technology
         </motion.p>
