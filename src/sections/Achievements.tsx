@@ -17,6 +17,8 @@ const Achievements: React.FC<AchievementsProps> = ({ onLinkHover, onLinkLeave, i
   useEffect(() => {
     if (inView || isActive) {
       controls.start('visible');
+    } else {
+      controls.start('hidden');
     }
   }, [controls, inView, isActive]);
 
@@ -70,21 +72,33 @@ const Achievements: React.FC<AchievementsProps> = ({ onLinkHover, onLinkLeave, i
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, staggerChildren: 0.2 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  };
+
   return (
-    <div 
-      ref={ref}
-      className="container mx-auto px-6 py-20"
-    >
-      <motion.div 
+    <div ref={ref} className="container mx-auto px-6 py-20">
+      <motion.div
         className="mb-16 text-center"
         initial="hidden"
         animate={controls}
-        variants={{
-          hidden: { opacity: 0, y: 20 },
-          visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-        }}
+        variants={containerVariants}
       >
-        <motion.h2 
+        <motion.h2
           className="text-3xl md:text-4xl font-bold mb-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,30 +106,28 @@ const Achievements: React.FC<AchievementsProps> = ({ onLinkHover, onLinkLeave, i
         >
           <span className="text-primary-500">Achievements</span> & Certifications
         </motion.h2>
-        <motion.p 
+
+        <motion.p
           className="text-gray-300 text-lg max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          animate={controls}
-          variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.4 } },
-          }}
+          variants={containerVariants}
         >
           Recognitions for excellence and dedication in the field of technology
         </motion.p>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16"
+        initial="hidden"
+        animate={controls}
+        variants={containerVariants}
+      >
         {achievements.map((achievement, index) => {
           const Icon = achievement.icon;
           return (
             <motion.div
               key={index}
               className="bg-dark-200 p-6 rounded-lg border-l-4 border-primary-500"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              viewport={{ once: true, margin: '-50px' }}
+              variants={itemVariants}
               whileHover={{ x: 5 }}
               onMouseEnter={onLinkHover}
               onMouseLeave={onLinkLeave}
@@ -132,31 +144,36 @@ const Achievements: React.FC<AchievementsProps> = ({ onLinkHover, onLinkLeave, i
             </motion.div>
           );
         })}
-      </div>
+      </motion.div>
 
-      <motion.h3 
+      <motion.h3
         className="text-2xl font-semibold mb-8 text-center"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
+        initial="hidden"
+        animate={controls}
+        variants={itemVariants}
       >
         Professional Certifications
       </motion.h3>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        initial="hidden"
+        animate={controls}
+        variants={containerVariants}
+      >
         {certificates.map((certificate, index) => (
-          <CertificateCard
-            key={index}
-            title={certificate.title}
-            issuer={certificate.issuer}
-            date={certificate.date}
-            image={certificate.image}
-            onHover={onLinkHover}
-            onLeave={onLinkLeave}
-          />
+          <motion.div key={index} variants={itemVariants}>
+            <CertificateCard
+              title={certificate.title}
+              issuer={certificate.issuer}
+              date={certificate.date}
+              image={certificate.image}
+              onHover={onLinkHover}
+              onLeave={onLinkLeave}
+            />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };
