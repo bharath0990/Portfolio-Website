@@ -53,10 +53,17 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
         </div>
 
         <AnimatedText
-          text="I'm a B.Tech CSE student at Saveetha School of Engineering and an Oracle Certified Java Professional. Passionate about real-time projects, I'm a fast learner who loves exploring new technologies and solving practical problems through code."
-          className="text-white mb-8 text-lg max-w-3xl mx-auto text-center"
-          delay={0.4}
-        />
+  text={
+    `<span class="text-blue-500 font-bold">
+      Hi, I'm <span class="text-red-500">Bharath Kumar Reddy</span>, a <span class="text-red-500">CSE (AI)</span> student passionate about building smart and efficient tech solutions. 
+      I enjoy working with Java, Python, and web technologies, and I'm currently exploring AI, cloud, and automation. 
+      Always curious and eager to learn, I love turning ideas into real projects.
+    </span>`
+  }
+  className="text-white mb-8 text-lg max-w-3xl mx-auto text-center"
+  delay={0.4}
+/>
+
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           <motion.div
