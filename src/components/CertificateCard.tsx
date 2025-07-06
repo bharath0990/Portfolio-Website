@@ -39,17 +39,17 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
         <div className="absolute inset-0 bg-gradient-to-t from-dark-300 via-transparent to-transparent opacity-70" />
       </div>
       
-      <div className="p-5">
+      <div className="p-5 text-left">
         <div className="flex items-start gap-2 mb-2">
-  <div className="min-w-[24px] h-6 flex items-center justify-center">
-    <Award size={20} className="text-primary-500" />
-  </div>
-  <h3 className="text-lg font-semibold text-white">{title}</h3>
-</div>
-        <div className="text-center">
-  <p className="text-sm text-gray-300 mb-1">{issuer}</p>
-  <p className="text-xs text-gray-400">{date}</p>
-</div>
+          <div className="min-w-[24px] h-6 flex items-center justify-center">
+            <Award size={20} className="text-primary-500" />
+          </div>
+          <h3 className="text-lg font-semibold text-white">{title}</h3>
+        </div>
+        <div className="text-left">
+          <p className="text-sm text-gray-300 mb-1">{issuer}</p>
+          <p className="text-xs text-gray-400">{date}</p>
+        </div>
       </div>
     </motion.div>
   );

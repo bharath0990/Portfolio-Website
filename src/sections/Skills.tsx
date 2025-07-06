@@ -38,20 +38,19 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
 
   const projects = [
     {
+      title: 'AI Based Attendance System using Face Recognition',
+      description: 'Face recognition attendance system using Python, OpenCV, and Tkinter. Auto-detects faces to mark attendance in real-time.',
+      image: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&fit=crop&w=600&q=80',
+      tags: ['Python', 'OpenCV', 'Tkinter', 'SQLite'],
+      liveUrl: '#',
+      githubUrl: 'https://github.com/bharath0990/AI-Based-Attendance-System-using-Face-Recognition',
+    },
+    {
       title: 'E-commerce Platform',
       description: 'A full-stack e-commerce platform with payment integration, user authentication, and admin dashboard.',
       image:
         'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
       tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-      liveUrl: '#',
-      githubUrl: '#',
-    },
-    {
-      title: 'AI Content Generator',
-      description: 'An AI-powered content generation tool that creates blog posts, social media content, and marketing copy.',
-      image:
-        'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      tags: ['Python', 'TensorFlow', 'React', 'AWS'],
       liveUrl: '#',
       githubUrl: '#',
     },

@@ -47,19 +47,19 @@ const Achievements: React.FC<AchievementsProps> = ({ onLinkHover, onLinkLeave, i
 
   const certificates = [
     {
-      title: "Oracle certified Professional: Java SE 11 Developer",
+      title: "Java SE 11 Developer",
       issuer: "ORACLE University",
       date: "Nov 20, 2024",
       image: "./OracleJava.jpg",
     },
     {
-      title: "Oracle Database SQL Certified Specialist",
+      title: "Database SQL Specialist",
       issuer: "ORACLE University",
       date: "Nov 14, 2024",
       image: "./OracleSQL.jpg",
     },
     {
-      title: "Oracle Cloud Infrastucture 2023 AI Certified Foundations Associate",
+      title: "Cloud AI Foundations Associate",
       issuer: "ORACLE University",
       date: "Aug 31, 2024",
       image: "./OracleAI.jpg",
