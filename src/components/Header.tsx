@@ -69,6 +69,8 @@ const Header: React.FC<HeaderProps> = ({ onLinkHover, onLinkLeave }) => {
                 transition={{ type: 'spring', stiffness: 500 }}
                 onMouseEnter={onLinkHover}
                 onMouseLeave={onLinkLeave}
+                target={item.href.startsWith('#') ? undefined : '_blank'}
+                rel={item.href.startsWith('#') ? undefined : 'noopener noreferrer'}
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
@@ -91,6 +93,8 @@ const Header: React.FC<HeaderProps> = ({ onLinkHover, onLinkLeave }) => {
                   onMouseEnter={onLinkHover}
                   onMouseLeave={onLinkLeave}
                   aria-label={social.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <Icon size={20} />
                 </motion.a>
@@ -131,6 +135,8 @@ const Header: React.FC<HeaderProps> = ({ onLinkHover, onLinkLeave }) => {
                 onClick={() => setMobileMenuOpen(false)}
                 onMouseEnter={onLinkHover}
                 onMouseLeave={onLinkLeave}
+                target={item.href.startsWith('#') ? undefined : '_blank'}
+                rel={item.href.startsWith('#') ? undefined : 'noopener noreferrer'}
               >
                 {item.label}
               </a>
@@ -146,6 +152,8 @@ const Header: React.FC<HeaderProps> = ({ onLinkHover, onLinkLeave }) => {
                     onMouseEnter={onLinkHover}
                     onMouseLeave={onLinkLeave}
                     aria-label={social.label}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <Icon size={20} />
                   </a>

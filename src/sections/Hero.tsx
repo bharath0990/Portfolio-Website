@@ -68,6 +68,8 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
             <a
               href="mailto:padakantibharath82@gmail.com"
               className="flex items-center text-sm text-gray-300 hover:text-primary-500 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Mail size={18} className="mr-2 text-primary-500" />
               padakantibharath82@gmail.com
@@ -117,6 +119,8 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1 }}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Download Resume
           </motion.a>
@@ -153,9 +157,9 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
             transition={{ type: 'spring', stiffness: 300 }}
           >
             <img
-              src="./profile.jpeg"
+              src="./profile.png"
               alt="P. Bharath Kumar Reddy"
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-cover object-top"
               onError={(e) => {
                 console.log('Image failed to load:', e);
                 // Fallback to a placeholder or hide the image

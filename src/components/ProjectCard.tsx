@@ -54,6 +54,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 onMouseEnter={onHover}
                 onMouseLeave={onLeave}
                 aria-label="View source code on GitHub"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Github size={16} />
               </motion.a>
@@ -67,6 +69,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 onMouseEnter={onHover}
                 onMouseLeave={onLeave}
                 aria-label="View live project"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <ExternalLink size={16} />
               </motion.a>

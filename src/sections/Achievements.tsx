@@ -51,24 +51,28 @@ const Achievements: React.FC<AchievementsProps> = ({ onLinkHover, onLinkLeave, i
       issuer: "ORACLE University",
       date: "Nov 20, 2024",
       image: "./OracleJava.jpg",
+      pdf: "./Oracle Certified Professional Java SE 11 Developer.pdf",
     },
     {
       title: "Database SQL Specialist",
       issuer: "ORACLE University",
       date: "Nov 14, 2024",
       image: "./OracleSQL.jpg",
+      pdf: "./Oracle Database SQL Specialist (1Z0-914).pdf",
     },
     {
       title: "Cloud AI Foundations Associate",
       issuer: "ORACLE University",
       date: "Aug 31, 2024",
       image: "./OracleAI.jpg",
+      pdf: "./Oracle Cloud Infrastructure 2023 AI Foundations Associate (1Z0-1122-23).pdf",
     },
     {
       title: "Python for Data Science",
       issuer: "Great Learning",
       date: "Jul 2024",
       image: "./GreatLearningPython.jpg",
+      pdf: "./PYTHON CERTIFICATE.pdf",
     },
   ];
 
@@ -168,6 +172,7 @@ const Achievements: React.FC<AchievementsProps> = ({ onLinkHover, onLinkLeave, i
               issuer={certificate.issuer}
               date={certificate.date}
               image={certificate.image}
+              pdfUrl={certificate.pdf}
               onHover={onLinkHover}
               onLeave={onLinkLeave}
             />

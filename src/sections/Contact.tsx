@@ -143,7 +143,7 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
             visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.4 } },
           }}
         >
-          Let’s connect to explore opportunities, collaborations, or just chat tech.
+          Let's connect to explore opportunities, collaborations, or just chat tech.
         </motion.p>
       </motion.div>
 
@@ -164,6 +164,8 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
                   key={index}
                   href={item.href}
                   className="flex items-center text-gray-300 hover:text-primary-400 transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ x: 5 }}
                   onMouseEnter={onLinkHover}
                   onMouseLeave={onLinkLeave}
