@@ -25,25 +25,25 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
     { 
       name: 'HTML5',
       logo: (
-        <img src="/html.png" alt="HTML5" className="w-12 h-12 object-contain" />
+        <img src="./html.png" alt="HTML5" className="w-12 h-12 object-contain" />
       )
     },
     { 
       name: 'CSS3',
       logo: (
-        <img src="/css-3.png" alt="CSS3" className="w-12 h-12 object-contain" />
+        <img src="./css-3.png" alt="CSS3" className="w-12 h-12 object-contain" />
       )
     },
     { 
       name: 'Figma',
       logo: (
-        <img src="/figma.png" alt="Figma" className="w-12 h-12 object-contain" />
+        <img src="./figma.png" alt="Figma" className="w-12 h-12 object-contain" />
       )
     },
     {
       name: 'Git',
       logo: (
-        <img src="/github.png" alt="Git" className="w-12 h-12 object-contain" />
+        <img src="./github.png" alt="Git" className="w-12 h-12 object-contain" />
       )
     },
   ];
@@ -53,7 +53,7 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
       name: 'Java',
       logo: (
         <img
-          src="java.png"
+          src="./java.png"
           alt="Java"
           className="w-12 h-12 object-contain"
           onError={e => { e.currentTarget.style.display = 'none'; }}
@@ -63,25 +63,25 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
     {
       name: 'C++',
       logo: (
-        <img src="/c-.png" alt="C++" className="w-12 h-12 object-contain" />
+        <img src="./c-.png" alt="C++" className="w-12 h-12 object-contain" />
       )
     },
     { 
       name: 'Python',
       logo: (
-        <img src="/python.png" alt="Python" className="w-12 h-12 object-contain" />
+        <img src="./python.png" alt="Python" className="w-12 h-12 object-contain" />
       )
     },
     { 
       name: 'SQL',
       logo: (
-        <img src="/sql-server.png" alt="SQL" className="w-12 h-12 object-contain" />
+        <img src="./sql-server.png" alt="SQL" className="w-12 h-12 object-contain" />
       )
     },
     {
       name: 'Oracle',
       logo: (
-        <img src="/oracle.png" alt="Oracle" className="w-12 h-12 object-contain" />
+        <img src="./oracle.png" alt="Oracle" className="w-12 h-12 object-contain" />
       )
     },
   ];
