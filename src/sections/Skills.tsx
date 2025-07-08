@@ -25,13 +25,17 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
     { 
       name: 'HTML5',
       logo: (
-        <img src="./html.png" alt="HTML5" className="w-12 h-12 object-contain" />
+        <div className="w-12 h-12 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center">
+          <img src="./html.png" alt="HTML5" className="w-8 h-8 object-contain" />
+        </div>
       )
     },
     { 
       name: 'CSS3',
       logo: (
-        <img src="./css-3.png" alt="CSS3" className="w-12 h-12 object-contain" />
+        <div className="w-12 h-12 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center">
+          <img src="./css-3.png" alt="CSS3" className="w-8 h-8 object-contain" />
+        </div>
       )
     },
     { 
@@ -43,7 +47,9 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
     {
       name: 'Git',
       logo: (
-        <img src="./github.png" alt="Git" className="w-12 h-12 object-contain" />
+        <div className="w-12 h-12 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center">
+          <img src="./github.png" alt="Git" className="w-8 h-8 object-contain" />
+        </div>
       )
     },
   ];
@@ -64,6 +70,20 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
       name: 'C++',
       logo: (
         <img src="./c-.png" alt="C++" className="w-12 h-12 object-contain" />
+      )
+    },
+    {
+      name: 'C',
+      logo: (
+        <img src="./letter-c.png" alt="C" className="w-12 h-12 object-contain" />
+      )
+    },
+    {
+      name: 'Eclipse-IDE',
+      logo: (
+        <div className="w-12 h-12 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center">
+          <img src="./Eclipse-IDE.png" alt="Eclipse IDE" className="w-8 h-8 object-contain" />
+        </div>
       )
     },
     { 
@@ -116,6 +136,7 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
 
   return (
     <div ref={ref} className="container mx-auto px-6 py-20">
+      {/* header */}
       <motion.div
         className="mb-16 text-center"
         initial="hidden"
@@ -147,8 +168,9 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
         </motion.p>
       </motion.div>
 
+      {/* skills section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-20">
-        {/* Frontend Skills - Moving Right to Left */}
+        {/* Frontend Skills */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -166,9 +188,9 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
               {frontendSkills.map((skill, index) => (
                 <motion.div
                   key={skill.name}
-                  className="absolute flex items-center justify-center group cursor-pointer"
+                  className="relative flex items-center justify-center group cursor-pointer"
                   initial={{ x: '100vw' }}
-                  animate={{ x: '-100px' }}
+                  animate={{ x: 0 }}
                   transition={{
                     duration: 8,
                     delay: index * 2,
@@ -184,9 +206,7 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
                     <div className="w-16 h-16 rounded-full bg-dark-100 border-2 border-white shadow-[0_0_20px_rgba(255,255,255,0.3)] group-hover:border-primary-500 group-hover:shadow-[0_0_30px_rgba(14,165,233,0.5)] flex items-center justify-center transition-all duration-300">
                       {skill.logo}
                     </div>
-                    
-                    {/* Tooltip */}
-                    <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-300 group-hover:visible group-focus:visible group-hover:scale-100 group-focus:scale-100 scale-95 group-hover:scale-100 group-focus:scale-100 z-10">
+                    <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-95 group-hover:scale-100 z-10">
                       <div className="bg-dark-100 px-2 py-1 rounded text-xs font-medium whitespace-nowrap border border-dark-100">
                         {skill.name}
                       </div>
@@ -198,7 +218,7 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
           </div>
         </motion.div>
 
-        {/* Backend Skills - Moving Left to Right */}
+        {/* Backend Skills */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -216,9 +236,9 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
               {backendSkills.map((skill, index) => (
                 <motion.div
                   key={skill.name}
-                  className="absolute flex items-center justify-center group cursor-pointer"
-                  initial={{ x: '-100px' }}
-                  animate={{ x: '100vw' }}
+                  className="relative flex items-center justify-center group cursor-pointer"
+                  initial={{ x: '-100vw' }}
+                  animate={{ x: 0 }}
                   transition={{
                     duration: 8,
                     delay: index * 2,
@@ -234,9 +254,7 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
                     <div className="w-16 h-16 rounded-full bg-dark-100 border-2 border-white shadow-[0_0_20px_rgba(255,255,255,0.3)] group-hover:border-secondary-500 group-hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] flex items-center justify-center transition-all duration-300">
                       {skill.logo}
                     </div>
-                    
-                    {/* Tooltip */}
-                    <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-300 group-hover:visible group-focus:visible group-hover:scale-100 group-focus:scale-100 scale-95 group-hover:scale-100 group-focus:scale-100 z-10">
+                    <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-95 group-hover:scale-100 z-10">
                       <div className="bg-dark-100 px-2 py-1 rounded text-xs font-medium whitespace-nowrap border border-dark-100">
                         {skill.name}
                       </div>
@@ -249,6 +267,7 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
         </motion.div>
       </div>
 
+      {/* Project Cards */}
       <motion.h3
         className="text-2xl font-semibold mb-8 text-center"
         initial={{ opacity: 0, y: 20 }}
