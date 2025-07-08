@@ -2,7 +2,6 @@ import { motion, useAnimation } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import ProjectCard from '../components/ProjectCard';
-import SkillBar from '../components/SkillBar';
 
 interface SkillsProps {
   onLinkHover: () => void;
@@ -23,17 +22,68 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
   }, [controls, inView, isActive]);
 
   const frontendSkills = [
-    { name: 'HTML', percentage: 95 },
-    { name: 'CSS', percentage: 85 },
-    { name: 'UI/UX', percentage: 80 },
-    { name: 'Figma', percentage: 70 },
+    { 
+      name: 'HTML5',
+      logo: (
+        <img src="/html.png" alt="HTML5" className="w-12 h-12 object-contain" />
+      )
+    },
+    { 
+      name: 'CSS3',
+      logo: (
+        <img src="/css-3.png" alt="CSS3" className="w-12 h-12 object-contain" />
+      )
+    },
+    { 
+      name: 'Figma',
+      logo: (
+        <img src="/figma.png" alt="Figma" className="w-12 h-12 object-contain" />
+      )
+    },
+    {
+      name: 'Git',
+      logo: (
+        <img src="/github.png" alt="Git" className="w-12 h-12 object-contain" />
+      )
+    },
   ];
 
   const backendSkills = [
-    { name: 'Java', percentage: 98 },
-    { name: 'SQL', percentage: 88 },
-    { name: 'Python', percentage: 75 },
-    { name: 'C/C++', percentage: 85 },
+    { 
+      name: 'Java',
+      logo: (
+        <img
+          src="java.png"
+          alt="Java"
+          className="w-12 h-12 object-contain"
+          onError={e => { e.currentTarget.style.display = 'none'; }}
+        />
+      )
+    },
+    {
+      name: 'C++',
+      logo: (
+        <img src="/c-.png" alt="C++" className="w-12 h-12 object-contain" />
+      )
+    },
+    { 
+      name: 'Python',
+      logo: (
+        <img src="/python.png" alt="Python" className="w-12 h-12 object-contain" />
+      )
+    },
+    { 
+      name: 'SQL',
+      logo: (
+        <img src="/sql-server.png" alt="SQL" className="w-12 h-12 object-contain" />
+      )
+    },
+    {
+      name: 'Oracle',
+      logo: (
+        <img src="/oracle.png" alt="Oracle" className="w-12 h-12 object-contain" />
+      )
+    },
   ];
 
   const projects = [
@@ -98,49 +148,104 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-20">
+        {/* Frontend Skills - Moving Right to Left */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
+          className="relative"
         >
           <h3 className="text-xl font-semibold mb-6 flex items-center">
             <span className="inline-block w-8 h-1 bg-primary-500 mr-3"></span>
             Frontend Development
           </h3>
 
-          {frontendSkills.map((skill) => (
-            <SkillBar
-              key={skill.name}
-              name={skill.name}
-              percentage={skill.percentage}
-              onHover={onLinkHover}
-              onLeave={onLinkLeave}
-            />
-          ))}
+          <div className="relative h-20 overflow-hidden rounded-lg bg-gradient-to-r from-dark-300 via-dark-200 to-dark-300 border border-dark-100">
+            <div className="flex items-center h-full">
+              {frontendSkills.map((skill, index) => (
+                <motion.div
+                  key={skill.name}
+                  className="absolute flex items-center justify-center group cursor-pointer"
+                  initial={{ x: '100vw' }}
+                  animate={{ x: '-100px' }}
+                  transition={{
+                    duration: 8,
+                    delay: index * 2,
+                    repeat: Infinity,
+                    repeatType: 'loop',
+                    ease: 'linear'
+                  }}
+                  whileHover={{ scale: 1.2 }}
+                  onMouseEnter={onLinkHover}
+                  onMouseLeave={onLinkLeave}
+                >
+                  <div className="relative">
+                    <div className="w-16 h-16 rounded-full bg-dark-100 border-2 border-white shadow-[0_0_20px_rgba(255,255,255,0.3)] group-hover:border-primary-500 group-hover:shadow-[0_0_30px_rgba(14,165,233,0.5)] flex items-center justify-center transition-all duration-300">
+                      {skill.logo}
+                    </div>
+                    
+                    {/* Tooltip */}
+                    <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-300 group-hover:visible group-focus:visible group-hover:scale-100 group-focus:scale-100 scale-95 group-hover:scale-100 group-focus:scale-100 z-10">
+                      <div className="bg-dark-100 px-2 py-1 rounded text-xs font-medium whitespace-nowrap border border-dark-100">
+                        {skill.name}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </motion.div>
 
+        {/* Backend Skills - Moving Left to Right */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
+          className="relative"
         >
           <h3 className="text-xl font-semibold mb-6 flex items-center">
-            <span className="inline-block w-8 h-1 bg-primary-500 mr-3"></span>
+            <span className="inline-block w-8 h-1 bg-secondary-500 mr-3"></span>
             Backend Development
           </h3>
 
-          {backendSkills.map((skill) => (
-            <SkillBar
-              key={skill.name}
-              name={skill.name}
-              percentage={skill.percentage}
-              color="bg-secondary-500"
-              onHover={onLinkHover}
-              onLeave={onLinkLeave}
-            />
-          ))}
+          <div className="relative h-20 overflow-hidden rounded-lg bg-gradient-to-l from-dark-300 via-dark-200 to-dark-300 border border-dark-100">
+            <div className="flex items-center h-full">
+              {backendSkills.map((skill, index) => (
+                <motion.div
+                  key={skill.name}
+                  className="absolute flex items-center justify-center group cursor-pointer"
+                  initial={{ x: '-100px' }}
+                  animate={{ x: '100vw' }}
+                  transition={{
+                    duration: 8,
+                    delay: index * 2,
+                    repeat: Infinity,
+                    repeatType: 'loop',
+                    ease: 'linear'
+                  }}
+                  whileHover={{ scale: 1.2 }}
+                  onMouseEnter={onLinkHover}
+                  onMouseLeave={onLinkLeave}
+                >
+                  <div className="relative">
+                    <div className="w-16 h-16 rounded-full bg-dark-100 border-2 border-white shadow-[0_0_20px_rgba(255,255,255,0.3)] group-hover:border-secondary-500 group-hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] flex items-center justify-center transition-all duration-300">
+                      {skill.logo}
+                    </div>
+                    
+                    {/* Tooltip */}
+                    <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-300 group-hover:visible group-focus:visible group-hover:scale-100 group-focus:scale-100 scale-95 group-hover:scale-100 group-focus:scale-100 z-10">
+                      <div className="bg-dark-100 px-2 py-1 rounded text-xs font-medium whitespace-nowrap border border-dark-100">
+                        {skill.name}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </motion.div>
       </div>
 
