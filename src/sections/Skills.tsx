@@ -68,32 +68,90 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
   const renderSkill = (
     skill: { name: string; logo: JSX.Element },
     index: number,
-    hoverColor: string,
-    glowColor: string
+    direction: 'left' | 'right'
   ) => (
-    <div
+    <motion.div
       key={`${skill.name}-${index}`}
-      className="group flex flex-col items-center justify-center mx-10 relative cursor-pointer"
+      className="group flex flex-col items-center justify-center mx-8 relative cursor-pointer"
       onMouseEnter={onLinkHover}
       onMouseLeave={onLinkLeave}
+      whileHover={{ scale: 1.1, y: -5 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >
       <div
-        className={`w-16 h-16 flex items-center justify-center rounded-full bg-gray-800 border-2 border-white shadow-[0_0_20px_4px_${glowColor}] group-hover:shadow-[0_0_40px_10px_rgba(14,165,233,0.8)] group-hover:border-${hoverColor}-500 transition-all duration-300`}
+        className={`w-16 h-16 flex items-center justify-center rounded-full bg-dark-200/80 backdrop-blur-sm border-2 border-gray-600 shadow-lg group-hover:shadow-2xl ${
+          direction === 'left' 
+            ? 'group-hover:border-blue-500 group-hover:shadow-blue-500/50 group-hover:shadow-[0_0_30px_rgba(59,130,246,0.5)]' 
+            : 'group-hover:border-purple-500 group-hover:shadow-purple-500/50 group-hover:shadow-[0_0_30px_rgba(147,51,234,0.5)]'
+        } transition-all duration-300`}
       >
         {skill.logo}
       </div>
-      <div className="absolute left-1/2 -translate-x-1/2 -bottom-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-        <div className="bg-gray-800 px-3 py-1 rounded text-xs text-white border shadow">
+      <motion.div 
+        className="absolute left-1/2 -translate-x-1/2 -bottom-12 z-20"
+        initial={{ opacity: 0, y: 10 }}
+        whileHover={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.2 }}
+      >
+        <div className={`px-3 py-2 rounded-lg text-sm text-white shadow-lg border ${
+          direction === 'left' 
+            ? 'bg-blue-600 border-blue-500' 
+            : 'bg-purple-600 border-purple-500'
+        }`}>
           {skill.name}
+          <div className={`absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-transparent ${
+            direction === 'left' ? 'border-t-blue-600' : 'border-t-purple-600'
+          }`} />
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 
   return (
-    <div ref={ref} className="container mx-auto px-6 py-20">
+    <div ref={ref} className="container mx-auto px-6 py-20 relative">
+      {/* Background glow effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute top-3/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.4, 0.2, 0.4],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary-500/5 rounded-full blur-2xl"
+          animate={{
+            rotate: [0, 360],
+            scale: [0.8, 1.1, 0.8],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+      </div>
+
       <motion.div
-        className="mb-16 text-center"
+        className="mb-16 text-center relative z-10"
         initial="hidden"
         animate={controls}
         variants={{
@@ -110,49 +168,63 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
       </motion.div>
 
       {/* Skills section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-20">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-20 relative z-10">
         {/* Frontend Skills */}
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
           <h3 className="text-xl font-semibold mb-6 flex items-center">
             <span className="inline-block w-8 h-1 bg-blue-500 mr-3"></span>
             Frontend Development
           </h3>
-          <div className="relative h-24 overflow-hidden rounded-lg bg-gray-900 border border-gray-800">
+          <div className="relative h-24 overflow-hidden rounded-lg bg-gray-900/50 backdrop-blur-sm border border-gray-800/50 shadow-2xl">
+            {/* Inner glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-transparent to-blue-500/5" />
             <motion.div
               className="flex items-center h-full w-max"
-              animate={{ x: ['0%', '-50%'] }}
-              transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+              animate={{ x: ['-50%', '0%'] }}
+              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
             >
               {[...frontendSkills, ...frontendSkills].map((skill, index) =>
-                renderSkill(skill, index, 'blue', 'rgba(14,165,233,0.5)')
+                renderSkill(skill, index, 'left')
               )}
             </motion.div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Backend Skills */}
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
           <h3 className="text-xl font-semibold mb-6 flex items-center">
             <span className="inline-block w-8 h-1 bg-purple-500 mr-3"></span>
             Backend Development
           </h3>
-          <div className="relative h-24 overflow-hidden rounded-lg bg-gray-900 border border-gray-800">
+          <div className="relative h-24 overflow-hidden rounded-lg bg-gray-900/50 backdrop-blur-sm border border-gray-800/50 shadow-2xl">
+            {/* Inner glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-transparent to-purple-500/5" />
             <motion.div
-              className="flex flex-row-reverse items-center h-full w-max"
+              className="flex items-center h-full w-max"
               animate={{ x: ['0%', '-50%'] }}
-              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+              transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
             >
               {[...backendSkills, ...backendSkills].map((skill, index) =>
-                renderSkill(skill, index, 'purple', 'rgba(139,92,246,0.5)')
+                renderSkill(skill, index, 'right')
               )}
             </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Projects */}
       <motion.h3
-        className="text-2xl font-semibold mb-8 text-center"
+        className="text-2xl font-semibold mb-8 text-center relative z-10"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -160,7 +232,7 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave, isActive }) =
         Featured Projects
       </motion.h3>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
         {projects.map((project, index) => (
           <ProjectCard
             key={index}

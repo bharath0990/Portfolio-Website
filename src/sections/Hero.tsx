@@ -45,7 +45,7 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
           </motion.span>
 
           <AnimatedText
-            text="Hi, I'm P. Bharath Kumar Reddy"
+            text="I'm P. Bharath Kumar Reddy"
             className="text-red-600 text-3xl font-bold"
             delay={0.1}
             noWrap
