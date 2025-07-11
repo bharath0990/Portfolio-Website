@@ -1,4 +1,4 @@
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   AlertCircle,
   CheckCircle,
@@ -12,7 +12,7 @@ import {
   Twitter
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { useScrollAnimation, fadeInUp } from '../../hooks/useScrollAnimation';
 import {
   initializeEmailJS,
   sendContactEmail,
@@ -25,9 +25,8 @@ interface ContactProps {
   isActive: boolean;
 }
 
-const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
-  const controls = useAnimation();
-  const [ref, inView] = useInView({ threshold: 0.1 });
+const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave }) => {
+  const { ref, controls } = useScrollAnimation(0.1, false);
 
   const [formState, setFormState] = useState<ContactFormData>({
     name: '',
@@ -37,12 +36,6 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState('');
-
-  useEffect(() => {
-    if (inView || isActive) {
-      controls.start('visible');
-    }
-  }, [controls, inView, isActive]);
 
   useEffect(() => {
     initializeEmailJS();
@@ -115,10 +108,7 @@ const Contact: React.FC<ContactProps> = ({ onLinkHover, onLinkLeave, isActive })
         className="mb-16 text-center"
         initial="hidden"
         animate={controls}
-        variants={{
-          hidden: { opacity: 0, y: 20 },
-          visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-        }}
+        variants={fadeInUp}
       >
         <motion.h2
           className="text-3xl md:text-4xl font-bold mb-6"

@@ -1,8 +1,8 @@
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Award, Trophy } from 'lucide-react';
-import React, { useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
+import React from 'react';
 import CertificateCard from '../components/CertificateCard';
+import { useScrollAnimation, fadeInUp, staggerContainer } from '../../hooks/useScrollAnimation';
 
 interface AchievementsProps {
   onLinkHover: () => void;
@@ -10,17 +10,8 @@ interface AchievementsProps {
   isActive: boolean;
 }
 
-const Achievements: React.FC<AchievementsProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
-  const controls = useAnimation();
-  const [ref, inView] = useInView({ threshold: 0.1 });
-
-  useEffect(() => {
-    if (inView || isActive) {
-      controls.start('visible');
-    } else {
-      controls.start('hidden');
-    }
-  }, [controls, inView, isActive]);
+const Achievements: React.FC<AchievementsProps> = ({ onLinkHover, onLinkLeave }) => {
+  const { ref, controls } = useScrollAnimation(0.1, false);
 
   const achievements = [
     {
@@ -77,21 +68,11 @@ const Achievements: React.FC<AchievementsProps> = ({ onLinkHover, onLinkLeave, i
   ];
 
   const containerVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, staggerChildren: 0.2 },
-    },
+    ...staggerContainer,
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
+    ...fadeInUp,
   };
 
   return (

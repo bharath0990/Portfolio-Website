@@ -1,12 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Header from './components/Header';
-import Hero from './sections/Hero';
-import Achievements from './sections/Achievements';
-import Skills from './sections/Skills';
-import Contact from './sections/Contact';
-import Cursor from './components/Cursor';
-import Navigation from './components/Navigation';
 import { AnimatePresence } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import Cursor from './components/Cursor';
+import Header from './components/Header';
+import Navigation from './components/Navigation';
+import ScrollProgress from './components/ScrollProgress';
+import ScrollToTop from './components/ScrollToTop';
+import Achievements from './sections/Achievements';
+import Contact from './sections/Contact';
+import Education from './sections/Education';
+import Hero from './sections/Hero';
+import Skills from './sections/Skills';
+
+// Add smooth scrolling CSS
+const smoothScrollCSS = `
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+`;
 
 function App() {
   const [activeSection, setActiveSection] = useState(0);
@@ -14,15 +30,39 @@ function App() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [cursorVariant, setCursorVariant] = useState('default');
 
+  // Add CSS for smooth scrolling
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = smoothScrollCSS;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   const sections = [
     { id: 'hero', component: Hero, label: 'About' },
     { id: 'achievements', component: Achievements, label: 'Achievements' },
+    { id: 'education', component: Education, label: 'Education' },
     { id: 'skills', component: Skills, label: 'Skills' },
     { id: 'contact', component: Contact, label: 'Contact' },
   ];
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateActiveSection();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    
+    const updateActiveSection = () => {
       const scrollPosition = window.scrollY + window.innerHeight / 3;
 
       sectionsRef.current.forEach((section, index) => {
@@ -52,8 +92,9 @@ function App() {
 
   const scrollToSection = (index: number) => {
     if (sectionsRef.current[index]) {
+      const targetPosition = sectionsRef.current[index].offsetTop;
       window.scrollTo({
-        top: sectionsRef.current[index].offsetTop,
+        top: targetPosition,
         behavior: 'smooth',
       });
     }
@@ -70,6 +111,7 @@ function App() {
   return (
     <div className="bg-dark-300 text-white min-h-screen">
       <Cursor position={cursorPosition} variant={cursorVariant} />
+      <ScrollProgress />
       <Header onLinkHover={handleLinkHover} onLinkLeave={handleLinkLeave} />
       <AnimatePresence>
         <main className="relative">
@@ -100,6 +142,7 @@ function App() {
             onLinkLeave={handleLinkLeave}
           />
         </main>
+        <ScrollToTop onHover={handleLinkHover} onLeave={handleLinkLeave} />
       </AnimatePresence>
     </div>
   );

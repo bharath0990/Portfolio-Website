@@ -1,8 +1,8 @@
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Calendar, Code, Database, Mail, MapPin, Server } from 'lucide-react';
-import React, { useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
+import React from 'react';
 import AnimatedText from '../components/AnimatedText';
+import { fadeInLeft, fadeInRight, useScrollAnimation } from '../../hooks/useScrollAnimation';
 
 interface HeroProps {
   onLinkHover: () => void;
@@ -10,15 +10,8 @@ interface HeroProps {
   isActive: boolean;
 }
 
-const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
-  const controls = useAnimation();
-  const [ref, inView] = useInView({ threshold: 0.3 });
-
-  useEffect(() => {
-    if (inView || isActive) {
-      controls.start('visible');
-    }
-  }, [controls, inView, isActive]);
+const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave }) => {
+  const { ref, controls } = useScrollAnimation(0.3);
 
   return (
     <div
@@ -29,27 +22,26 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
         className="w-full md:w-1/2 order-2 md:order-1"
         initial="hidden"
         animate={controls}
-        variants={{
-          hidden: { opacity: 0, x: -50 },
-          visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
-        }}
+        variants={fadeInLeft}
       >
         <div className="mb-4">
-          <motion.span
-            className="inline-block py-1 px-3 rounded-full bg-primary-500/10 text-primary-500 text-sm font-medium mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            Java Developer
-          </motion.span>
-
           <AnimatedText
             text="I'm P. Bharath Kumar Reddy"
             className="text-red-600 text-3xl font-bold"
             delay={0.1}
             noWrap
           />
+          
+          <motion.div
+            className="mt-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <span className="text-primary-400 text-lg font-medium">
+              Java Programmer, Python Programmer
+            </span>
+          </motion.div>
         </div>
 
         <AnimatedText
@@ -145,10 +137,7 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave, isActive }) => {
         className="w-full md:w-1/2 order-1 md:order-2 flex justify-center"
         initial="hidden"
         animate={controls}
-        variants={{
-          hidden: { opacity: 0, x: 50 },
-          visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
-        }}
+        variants={fadeInRight}
       >
         <div className="relative w-72 h-72 md:w-96 md:h-96">
           <motion.div

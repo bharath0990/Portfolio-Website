@@ -34,6 +34,7 @@ const Header: React.FC<HeaderProps> = ({ onLinkHover, onLinkLeave }) => {
   const navLinks = [
     { label: 'About', href: '#hero' },
     { label: 'Achievements', href: '#achievements' },
+    { label: 'Education', href: '#education' },
     { label: 'Skills', href: '#skills' },
     { label: 'Contact', href: '#contact' },
   ];
