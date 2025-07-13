@@ -109,12 +109,22 @@ const Education: React.FC<EducationProps> = ({ onLinkHover, onLinkLeave }) => {
         animate={controls}
         variants={fadeInUp}
       >
-        <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-          Education
-        </h2>
-        <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+        <motion.h2
+          className="text-3xl md:text-4xl font-bold mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <span className="text-primary-500">Education</span>
+        </motion.h2>
+        <motion.p
+          className="text-gray-300 text-lg max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
           My academic journey and educational background
-        </p>
+        </motion.p>
       </motion.div>
       <div className="relative z-10 max-w-4xl mx-auto">
         {educationData.map((edu, index) => (

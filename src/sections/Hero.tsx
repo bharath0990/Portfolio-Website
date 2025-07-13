@@ -24,25 +24,39 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave }) => {
         animate={controls}
         variants={fadeInLeft}
       >
-        <div className="mb-4">
-          <AnimatedText
-            text="I'm P. Bharath Kumar Reddy"
-            className="text-red-600 text-3xl font-bold"
-            delay={0.1}
-            noWrap
-          />
-          
-          <motion.div
-            className="mt-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+        <motion.div
+          className="mb-16 text-center"
+          initial="hidden"
+          animate={controls}
+        >
+          <motion.h2
+            className="text-3xl md:text-4xl font-bold mb-4"
+            initial={{ opacity: 0, scale: 0.5, rotateX: -90 }}
+            animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+            transition={{ 
+              duration: 0.6, 
+              ease: [0.25, 0.46, 0.45, 0.94],
+              type: "spring",
+              stiffness: 100,
+              damping: 15
+            }}
           >
-            <span className="text-primary-400 text-lg font-medium">
-              Java Programmer, Python Programmer
-            </span>
-          </motion.div>
-        </div>
+            <span className="text-primary-500">About</span>
+          </motion.h2>
+
+          <motion.p
+            className="text-gray-300 text-lg max-w-2xl mx-auto"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ 
+              duration: 0.5, 
+              delay: 0.2,
+              ease: "easeOut"
+            }}
+          >
+            Get to know me better
+          </motion.p>
+        </motion.div>
 
         <AnimatedText
           text="A CSE (AI) student at Saveetha School of Engineering - Chennai, passionate about building smart and efficient tech solutions. I enjoy working with Java, Python, and web technologies, and I'm currently exploring AI, cloud, and automation. Always curious and eager to learn, I love turning ideas into real projects."

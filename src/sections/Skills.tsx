@@ -118,8 +118,8 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave }) => {
         animate={controls}
         variants={fadeInUp}
       >
-        <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-          SKILLS
+        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <span className="text-primary-500">Skills</span> & Future Projects
         </h2>
         <p className="text-gray-300 text-lg max-w-2xl mx-auto">
           Technical expertise and tools I work with

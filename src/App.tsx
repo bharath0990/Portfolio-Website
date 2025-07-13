@@ -9,6 +9,7 @@ import Achievements from './sections/Achievements';
 import Contact from './sections/Contact';
 import Education from './sections/Education';
 import Hero from './sections/Hero';
+import Intro from './sections/Intro';
 import Skills from './sections/Skills';
 
 // Add smooth scrolling CSS
@@ -26,9 +27,9 @@ const smoothScrollCSS = `
 
 function App() {
   const [activeSection, setActiveSection] = useState(0);
-  const sectionsRef = useRef<HTMLDivElement[]>([]);
+  const sectionsRef = useRef<(HTMLDivElement | null)[]>([]);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [cursorVariant, setCursorVariant] = useState('default');
+  const [cursorVariant, setCursorVariant] = useState<'default' | 'link'>('default');
 
   // Add CSS for smooth scrolling
   useEffect(() => {
@@ -42,6 +43,7 @@ function App() {
   }, []);
 
   const sections = [
+    { id: 'intro', component: Intro, label: 'Intro' },
     { id: 'hero', component: Hero, label: 'About' },
     { id: 'achievements', component: Achievements, label: 'Achievements' },
     { id: 'education', component: Education, label: 'Education' },
@@ -122,7 +124,7 @@ function App() {
                 key={section.id}
                 id={section.id}
                 ref={(el) => {
-                  if (el) sectionsRef.current[index] = el;
+                  sectionsRef.current[index] = el as HTMLDivElement | null;
                 }}
                 className="min-h-screen"
               >
