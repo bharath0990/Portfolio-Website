@@ -4,13 +4,7 @@ import React from 'react';
 import AnimatedText from '../components/AnimatedText';
 import { fadeInLeft, fadeInRight, useScrollAnimation } from '../../hooks/useScrollAnimation';
 
-interface HeroProps {
-  onLinkHover: () => void;
-  onLinkLeave: () => void;
-  isActive: boolean;
-}
-
-const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave }) => {
+const Hero: React.FC = () => {
   const { ref, controls } = useScrollAnimation(0.3);
 
   return (
@@ -120,8 +114,6 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave }) => {
             className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onMouseEnter={onLinkHover}
-            onMouseLeave={onLinkLeave}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1 }}
@@ -136,8 +128,6 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave }) => {
             className="px-6 py-3 border border-primary-500 text-primary-500 hover:bg-primary-500/10 rounded-lg font-medium transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onMouseEnter={onLinkHover}
-            onMouseLeave={onLinkLeave}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.1 }}

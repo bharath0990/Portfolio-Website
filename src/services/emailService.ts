@@ -17,8 +17,8 @@ export const sendContactEmail = async (formData: ContactFormData): Promise<boole
       from_name: formData.name,
       from_email: formData.email,
       message: formData.message,
-      to_name: 'Bharath Kumar Reddy',
       reply_to: formData.email,
+      to_name: 'Bharath Kumar Reddy',
     };
 
     const response = await emailjs.send(
