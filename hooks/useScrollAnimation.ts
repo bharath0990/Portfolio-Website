@@ -1,12 +1,13 @@
 import { useAnimation } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 
-export const useScrollAnimation = (threshold = 0.1, triggerOnce = true) => {
+export const useScrollAnimation = (threshold = 0.2, triggerOnce = true) => {
   const controls = useAnimation();
   const [ref, inView] = useInView({
     threshold,
     triggerOnce,
+    rootMargin: '50px 0px',
   });
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export const useScrollAnimation = (threshold = 0.1, triggerOnce = true) => {
 export const fadeInUp = {
   hidden: { 
     opacity: 0, 
-    y: 60,
+    y: 30,
     transition: { duration: 0.6, ease: [0.6, -0.05, 0.01, 0.99] }
   },
   visible: { 
@@ -36,7 +37,7 @@ export const fadeInUp = {
 export const fadeInLeft = {
   hidden: { 
     opacity: 0, 
-    x: -60,
+    x: -30,
     transition: { duration: 0.6, ease: [0.6, -0.05, 0.01, 0.99] }
   },
   visible: { 
@@ -49,7 +50,7 @@ export const fadeInLeft = {
 export const fadeInRight = {
   hidden: { 
     opacity: 0, 
-    x: 60,
+    x: 30,
     transition: { duration: 0.6, ease: [0.6, -0.05, 0.01, 0.99] }
   },
   visible: { 
@@ -64,8 +65,8 @@ export const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
+      staggerChildren: 0.05,
+      delayChildren: 0.1,
     },
   },
 };

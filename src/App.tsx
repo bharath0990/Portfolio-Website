@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Cursor from './components/Cursor';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
@@ -12,34 +12,18 @@ import Hero from './sections/Hero';
 import Intro from './sections/Intro';
 import Skills from './sections/Skills';
 
-// Add smooth scrolling CSS
-const smoothScrollCSS = `
-  html {
-    scroll-behavior: smooth;
-  }
-  
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-  }
-`;
-
 function App() {
   const [activeSection, setActiveSection] = useState(0);
   const sectionsRef = useRef<(HTMLDivElement | null)[]>([]);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [cursorVariant, setCursorVariant] = useState<'default' | 'link'>('default');
+  const lastScrollTime = useRef(0);
+  const scrollTimeout = useRef<NodeJS.Timeout>();
 
-  // Add CSS for smooth scrolling
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.textContent = smoothScrollCSS;
-    document.head.appendChild(style);
-    
-    return () => {
-      document.head.removeChild(style);
-    };
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    requestAnimationFrame(() => {
+      setCursorPosition({ x: e.clientX, y: e.clientY });
+    });
   }, []);
 
   const sections = [
@@ -51,53 +35,52 @@ function App() {
     { id: 'contact', component: Contact, label: 'Contact' },
   ];
 
-  useEffect(() => {
-    let ticking = false;
-    
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          updateActiveSection();
-          ticking = false;
-        });
-        ticking = true;
+  const updateActiveSection = useCallback(() => {
+    const scrollPosition = window.scrollY + window.innerHeight / 3;
+
+    sectionsRef.current.forEach((section, index) => {
+      if (!section) return;
+      
+      const sectionTop = section.offsetTop;
+      const sectionBottom = sectionTop + section.offsetHeight;
+
+      if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+        setActiveSection(index);
       }
-    };
-    
-    const updateActiveSection = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
+    });
+  }, []);
 
-      sectionsRef.current.forEach((section, index) => {
-        if (!section) return;
-        
-        const sectionTop = section.offsetTop;
-        const sectionBottom = sectionTop + section.offsetHeight;
+  useEffect(() => {
+    const handleScroll = () => {
+      const now = Date.now();
+      if (now - lastScrollTime.current < 16) return; // Throttle to ~60fps
+      lastScrollTime.current = now;
 
-        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-          setActiveSection(index);
-        }
-      });
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY });
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+      
+      scrollTimeout.current = setTimeout(updateActiveSection, 10);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
     };
-  }, []);
+  }, [updateActiveSection, handleMouseMove]);
 
   const scrollToSection = (index: number) => {
     if (sectionsRef.current[index]) {
       const targetPosition = sectionsRef.current[index].offsetTop;
       window.scrollTo({
         top: targetPosition,
-        behavior: 'smooth',
+        behavior: 'auto', // Changed from smooth to auto for better performance
       });
     }
   };
@@ -112,10 +95,9 @@ function App() {
 
   return (
     <div className="bg-dark-300 text-white min-h-screen">
-      <Cursor position={cursorPosition} variant={cursorVariant} />
       <ScrollProgress />
       <Header onLinkHover={handleLinkHover} onLinkLeave={handleLinkLeave} />
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         <main className="relative">
           {sections.map((section, index) => {
             const SectionComponent = section.component;
@@ -146,6 +128,7 @@ function App() {
         </main>
         <ScrollToTop onHover={handleLinkHover} onLeave={handleLinkLeave} />
       </AnimatePresence>
+      <Cursor position={cursorPosition} variant={cursorVariant} />
     </div>
   );
 }

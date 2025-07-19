@@ -16,8 +16,6 @@ const Intro: React.FC<IntroProps> = () => {
       ref={ref}
       className="min-h-screen flex items-center justify-center relative overflow-hidden"
     >
-
-
       <motion.div
         className="text-center relative z-10"
         initial="hidden"
@@ -64,15 +62,15 @@ const Intro: React.FC<IntroProps> = () => {
 
         <motion.div
           className="mt-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
         >
           <motion.div
             className="w-16 h-1 bg-gradient-to-r from-red-500/60 to-sky-500/60 mx-auto rounded-full"
             initial={{ width: 0 }}
             animate={{ width: 64 }}
-            transition={{ delay: 2.5, duration: 1 }}
+            transition={{ delay: 2, duration: 0.8 }}
           />
         </motion.div>
       </motion.div>
@@ -80,19 +78,19 @@ const Intro: React.FC<IntroProps> = () => {
       {/* Scroll indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 3, duration: 0.8 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.5, duration: 0.6 }}
       >
         <motion.div
           className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
         >
           <motion.div
             className="w-1 h-3 bg-white/50 rounded-full mt-2"
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
           />
         </motion.div>
       </motion.div>

@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { Award, Trophy } from 'lucide-react';
 import React from 'react';
+import { fadeInUp, staggerContainer, useScrollAnimation } from '../../hooks/useScrollAnimation';
 import CertificateCard from '../components/CertificateCard';
-import { useScrollAnimation, fadeInUp, staggerContainer } from '../../hooks/useScrollAnimation';
 
 interface AchievementsProps {
   onLinkHover: () => void;
@@ -133,21 +133,29 @@ const Achievements: React.FC<AchievementsProps> = ({ onLinkHover, onLinkLeave })
 
       <motion.h3
         className="text-2xl font-semibold mb-8 text-center"
-        initial="hidden"
-        animate={controls}
-        variants={itemVariants}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
       >
         Professional Certifications
       </motion.h3>
 
       <motion.div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-        initial="hidden"
-        animate={controls}
-        variants={containerVariants}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.6, staggerChildren: 0.1 }}
+        viewport={{ once: true }}
       >
         {certificates.map((certificate, index) => (
-          <motion.div key={index} variants={itemVariants}>
+          <motion.div 
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            viewport={{ once: true }}
+          >
             <CertificateCard
               title={certificate.title}
               issuer={certificate.issuer}

@@ -2,6 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Performance optimizations */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: auto; /* Disable smooth scrolling for better performance */
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* GPU acceleration for better performance */
+.transform-gpu {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
 .grok-outline {
   display: block;
   font-family: 'Inter', 'Montserrat', Arial, sans-serif;

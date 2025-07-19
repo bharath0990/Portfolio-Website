@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
-import { BookOpen, Calendar, GraduationCap, MapPin } from 'lucide-react';
+import { Calendar, GraduationCap, MapPin } from 'lucide-react';
 import React from 'react';
-import { useScrollAnimation, fadeInUp } from "../../hooks/useScrollAnimation";
+import { fadeInUp, useScrollAnimation } from "../../hooks/useScrollAnimation";
 
 interface EducationProps {
   onLinkHover: () => void;
@@ -28,80 +28,9 @@ const Education: React.FC<EducationProps> = ({ onLinkHover, onLinkLeave }) => {
   return (
     <div ref={ref} className="container mx-auto px-6 py-20 relative">
       {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute top-3/4 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.4, 0.2, 0.4],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
-        {/* Floating Education Icons */}
-        <div className="absolute left-20 top-1/3 opacity-20">
-          <motion.div
-            animate={{
-              y: [0, -20, 0],
-              rotate: [0, 5, 0],
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            <BookOpen size={60} className="text-primary-500" />
-          </motion.div>
-        </div>
-        <div className="absolute right-20 top-1/2 opacity-20">
-          <motion.div
-            animate={{
-              y: [0, 20, 0],
-              rotate: [0, -5, 0],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2
-            }}
-          >
-            <GraduationCap size={80} className="text-orange-500" />
-          </motion.div>
-        </div>
-        <div className="absolute left-1/2 top-20 opacity-10">
-          <motion.div
-            animate={{
-              scale: [1, 1.1, 1],
-              rotate: [0, 10, 0],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1
-            }}
-          >
-            <div className="w-32 h-32 bg-gradient-to-br from-primary-500 to-orange-500 rounded-2xl transform rotate-12" />
-          </motion.div>
-        </div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-3/4 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl" />
       </div>
       <motion.div
         className="mb-16 text-center relative z-10"
@@ -153,10 +82,9 @@ const Education: React.FC<EducationProps> = ({ onLinkHover, onLinkLeave }) => {
               <motion.div
                 className="flex-1 bg-dark-200/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 shadow-xl"
                 whileHover={{ 
-                  scale: 1.02,
-                  boxShadow: '0 25px 50px -12px rgba(14, 165, 233, 0.25)'
+                  scale: 1.01
                 }}
-                transition={{ type: 'spring', stiffness: 300 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               >
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                   <div className="flex-1">

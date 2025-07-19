@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import React from 'react';
+import { fadeInUp, staggerContainer, useScrollAnimation } from '../../hooks/useScrollAnimation';
 import ProjectCard from '../components/ProjectCard';
-import { useScrollAnimation, fadeInUp, staggerContainer } from '../../hooks/useScrollAnimation';
 
 interface SkillsProps {
   onLinkHover: () => void;
@@ -60,13 +60,13 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave }) => {
       onMouseEnter={onLinkHover}
       onMouseLeave={onLinkLeave}
       whileHover={{ scale: 1.1, y: -5 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      whileInView={{ opacity: 1, y: 0, transition: { delay: index * 0.1 } }}
+      whileInView={{ opacity: 1, y: 0, transition: { delay: index * 0.05 } }}
       viewport={{ once: true }}
     >
-      <div className="w-20 h-20 flex items-center justify-center rounded-full bg-dark-200/80 backdrop-blur-sm border-2 border-gray-600 shadow-lg group-hover:shadow-2xl group-hover:border-primary-500 group-hover:shadow-primary-500/50 group-hover:shadow-[0_0_30px_rgba(14,165,233,0.5)] transition-all duration-300 mb-3">
+      <div className="w-20 h-20 flex items-center justify-center rounded-full bg-dark-200/80 border-2 border-gray-600 shadow-lg group-hover:border-primary-500 transition-all duration-200 mb-3">
         {skill.logo}
       </div>
       <motion.div 
@@ -85,32 +85,9 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave }) => {
   return (
     <div ref={ref} className="container mx-auto px-6 py-20 relative">
       {/* Background glow effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute top-3/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.4, 0.2, 0.4],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-3/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl" />
       </div>
       <motion.div
         className="mb-16 text-center relative z-10"
