@@ -11,18 +11,24 @@ interface SkillsProps {
 const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave }) => {
   const { ref, controls } = useScrollAnimation(0.1, false);
 
-  const skills = [
+  const frontendSkills = [
     { name: 'HTML5', logo: <img src="./html.png" alt="HTML5" className="w-12 h-12 object-contain" /> },
     { name: 'CSS3', logo: <img src="./css-3.png" alt="CSS3" className="w-12 h-12 object-contain" /> },
-    { name: 'Git Bash', logo: <img src="./Git-Bash.png" alt="Bash" className="w-12 h-12 object-contain" /> },
     { name: 'Figma', logo: <img src="./figma.png" alt="Figma" className="w-12 h-12 object-contain" /> },
-    { name: 'SQL', logo: <img src="./sql-server.png" alt="SQL" className="w-12 h-12 object-contain" /> },
-    { name: 'Oracle', logo: <img src="./oracle.png" alt="Oracle" className="w-12 h-12 object-contain" /> },
-    { name: 'C++', logo: <img src="./c-.png" alt="C++" className="w-12 h-12 object-contain" /> },
-    { name: 'C', logo: <img src="./letter-c.png" alt="C" className="w-12 h-12 object-contain" /> },
+  ];
+
+  const backendSkills = [
     { name: 'Python', logo: <img src="./python.png" alt="Python" className="w-12 h-12 object-contain" /> },
     { name: 'Java', logo: <img src="./java.png" alt="Java" className="w-12 h-12 object-contain" /> },
+    { name: 'C++', logo: <img src="./c-.png" alt="C++" className="w-12 h-12 object-contain" /> },
+    { name: 'C', logo: <img src="./letter-c.png" alt="C" className="w-12 h-12 object-contain" /> },
+    { name: 'SQL', logo: <img src="./sql-server.png" alt="SQL" className="w-12 h-12 object-contain" /> },
+    { name: 'Oracle', logo: <img src="./oracle.png" alt="Oracle" className="w-12 h-12 object-contain" /> },
+  ];
+
+  const toolsSkills = [
     { name: 'Git', logo: <img src="./github.png" alt="Git" className="w-12 h-12 object-contain" /> },
+    { name: 'Git Bash', logo: <img src="./Git-Bash.png" alt="Bash" className="w-12 h-12 object-contain" /> },
     { name: 'Eclipse', logo: <img src="./Eclipse-IDE.png" alt="Eclipse" className="w-12 h-12 object-contain" /> },
   ];
 
@@ -56,28 +62,45 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave }) => {
   const renderSkill = (skill: { name: string; logo: JSX.Element }, index: number) => (
     <motion.div
       key={`${skill.name}-${index}`}
-      className="group flex flex-col items-center justify-center relative cursor-pointer"
+      className="group flex flex-col items-center justify-center relative cursor-pointer mx-4"
       onMouseEnter={onLinkHover}
       onMouseLeave={onLinkLeave}
       whileHover={{ scale: 1.1, y: -5 }}
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileInView={{ opacity: 1, y: 0, transition: { delay: index * 0.05 } }}
-      viewport={{ once: true }}
     >
-      <div className="w-20 h-20 flex items-center justify-center rounded-full bg-dark-200/80 border-2 border-gray-600 shadow-lg group-hover:border-primary-500 transition-all duration-200 mb-3">
+      <div className="w-20 h-20 flex items-center justify-center rounded-full bg-dark-200/80 border-2 border-gray-600 shadow-lg transition-all duration-200 mb-3">
         {skill.logo}
       </div>
-      <motion.div 
-        className="text-center"
-        initial={{ opacity: 0 }}
-        whileHover={{ opacity: 1 }}
-        transition={{ duration: 0.2 }}
-      >
+      <div className="text-center">
         <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">
           {skill.name}
         </span>
+      </div>
+    </motion.div>
+  );
+
+  const renderSkillCategory = (title: string, skills: typeof frontendSkills, color: string) => (
+    <motion.div
+      className="mb-12"
+      initial="hidden"
+      animate={controls}
+      variants={fadeInUp}
+    >
+      <motion.h3
+        className={`text-2xl font-bold mb-6 text-center ${color}`}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {title}
+      </motion.h3>
+      <motion.div
+        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8"
+        initial="hidden"
+        animate={controls}
+        variants={staggerContainer}
+      >
+        {skills.map((skill, index) => renderSkill(skill, index))}
       </motion.div>
     </motion.div>
   );
@@ -102,15 +125,14 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave }) => {
           Technical expertise and tools I work with
         </p>
       </motion.div>
-      {/* Skills Grid */}
-      <motion.div
-        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8 mb-20 relative z-10"
-        initial="hidden"
-        animate={controls}
-        variants={staggerContainer}
-      >
-        {skills.map((skill, index) => renderSkill(skill, index))}
-      </motion.div>
+      
+      {/* Skills Categories */}
+      <div className="relative z-10">
+        {renderSkillCategory('Frontend Development', frontendSkills, 'text-blue-400')}
+        {renderSkillCategory('Backend Development', backendSkills, 'text-green-400')}
+        {renderSkillCategory('Tools & IDEs', toolsSkills, 'text-purple-400')}
+      </div>
+
       {/* Projects */}
       <motion.h3
         className="text-2xl font-semibold mb-8 text-center relative z-10"

@@ -8,7 +8,7 @@ interface IntroProps {
   isActive: boolean;
 }
 
-const Intro: React.FC<IntroProps> = () => {
+const Intro: React.FC<Partial<IntroProps>> = () => {
   const { ref, controls } = useScrollAnimation(0.3);
 
   return (
@@ -22,8 +22,8 @@ const Intro: React.FC<IntroProps> = () => {
         animate={controls}
         variants={{
           hidden: { opacity: 0, y: 50 },
-          visible: { 
-            opacity: 1, 
+          visible: {
+            opacity: 1,
             y: 0,
             transition: { duration: 1, ease: [0.6, -0.05, 0.01, 0.99] }
           }

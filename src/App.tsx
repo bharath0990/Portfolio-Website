@@ -1,4 +1,3 @@
-import { AnimatePresence } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Cursor from './components/Cursor';
 import Header from './components/Header';
@@ -17,14 +16,6 @@ function App() {
   const sectionsRef = useRef<(HTMLDivElement | null)[]>([]);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [cursorVariant, setCursorVariant] = useState<'default' | 'link'>('default');
-  const lastScrollTime = useRef(0);
-  const scrollTimeout = useRef<NodeJS.Timeout>();
-
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    requestAnimationFrame(() => {
-      setCursorPosition({ x: e.clientX, y: e.clientY });
-    });
-  }, []);
 
   const sections = [
     { id: 'intro', component: Intro, label: 'Intro' },
@@ -51,29 +42,37 @@ function App() {
   }, []);
 
   useEffect(() => {
+    let animationFrameId: number | null = null;
     const handleScroll = () => {
-      const now = Date.now();
-      if (now - lastScrollTime.current < 16) return; // Throttle to ~60fps
-      lastScrollTime.current = now;
-
-      if (scrollTimeout.current) {
-        clearTimeout(scrollTimeout.current);
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
       }
-      
-      scrollTimeout.current = setTimeout(updateActiveSection, 10);
+      animationFrameId = requestAnimationFrame(() => {
+        updateActiveSection();
+        animationFrameId = null;
+      });
+    };
+
+    let lastMouseMove = 0;
+    const handleMouseMoveThrottled = (e: MouseEvent) => {
+      const now = Date.now();
+      if (now - lastMouseMove > 16) { // ~60fps
+        lastMouseMove = now;
+        setCursorPosition({ x: e.clientX, y: e.clientY });
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mousemove', handleMouseMoveThrottled, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('mousemove', handleMouseMove);
-      if (scrollTimeout.current) {
-        clearTimeout(scrollTimeout.current);
+      window.removeEventListener('mousemove', handleMouseMoveThrottled);
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [updateActiveSection, handleMouseMove]);
+  }, [updateActiveSection]);
 
   const scrollToSection = (index: number) => {
     if (sectionsRef.current[index]) {
@@ -97,37 +96,35 @@ function App() {
     <div className="bg-dark-300 text-white min-h-screen">
       <ScrollProgress />
       <Header onLinkHover={handleLinkHover} onLinkLeave={handleLinkLeave} />
-      <AnimatePresence mode="wait">
-        <main className="relative">
-          {sections.map((section, index) => {
-            const SectionComponent = section.component;
-            return (
-              <section
-                key={section.id}
-                id={section.id}
-                ref={(el) => {
-                  sectionsRef.current[index] = el as HTMLDivElement | null;
-                }}
-                className="min-h-screen"
-              >
-                <SectionComponent 
-                  onLinkHover={handleLinkHover} 
-                  onLinkLeave={handleLinkLeave} 
-                  isActive={activeSection === index}
-                />
-              </section>
-            );
-          })}
-          <Navigation 
-            sections={sections} 
-            activeSection={activeSection} 
-            onNavigate={scrollToSection}
-            onLinkHover={handleLinkHover}
-            onLinkLeave={handleLinkLeave}
-          />
-        </main>
-        <ScrollToTop onHover={handleLinkHover} onLeave={handleLinkLeave} />
-      </AnimatePresence>
+      <main className="relative">
+        {sections.map((section, index) => {
+          const SectionComponent = section.component;
+          return (
+            <section
+              key={section.id}
+              id={section.id}
+              ref={(el) => {
+                sectionsRef.current[index] = el as HTMLDivElement | null;
+              }}
+              className="min-h-screen"
+            >
+              <SectionComponent
+                onLinkHover={handleLinkHover}
+                onLinkLeave={handleLinkLeave}
+                isActive={activeSection === index}
+              />
+            </section>
+          );
+        })}
+        <Navigation
+          sections={sections}
+          activeSection={activeSection}
+          onNavigate={scrollToSection}
+          onLinkHover={handleLinkHover}
+          onLinkLeave={handleLinkLeave}
+        />
+      </main>
+      <ScrollToTop onHover={handleLinkHover} onLeave={handleLinkLeave} />
       <Cursor position={cursorPosition} variant={cursorVariant} />
     </div>
   );
