@@ -1,169 +1,128 @@
-import { motion } from 'framer-motion';
-import { Github, Instagram, Linkedin, Menu, Twitter, X } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Github, Instagram, Linkedin, Menu, X, ArrowUpRight } from 'lucide-react';
 
 interface HeaderProps {
-  onLinkHover: () => void;
-  onLinkLeave: () => void;
+  onLinkHover?: () => void;
+  onLinkLeave?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ onLinkHover, onLinkLeave }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
 
   const socialLinks = [
     { icon: Github, href: 'https://github.com/bharath0990', label: 'GitHub' },
     { icon: Linkedin, href: 'https://www.linkedin.com/in/bharath0990', label: 'LinkedIn' },
-    { icon: Twitter, href: 'https://x.com/BharathReddy224', label: 'Twitter' },
     { icon: Instagram, href: 'https://www.instagram.com/p.bharathreddyy_/', label: 'Instagram' },
   ];
 
   const navLinks = [
-    { label: 'About', href: '#hero' },
+    { label: 'About & Profile', href: '#hero' },
     { label: 'Achievements', href: '#achievements' },
     { label: 'Education', href: '#education' },
-    { label: 'Skills', href: '#skills' },
+    { label: 'Skills & Projects', href: '#skills' },
     { label: 'Contact', href: '#contact' },
   ];
 
   return (
-    <header 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-dark-200/90 backdrop-blur-md py-4' : 'bg-transparent py-6'
-      }`}
-    >
-      <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between">
-          <motion.a 
-            href="#" 
-            className="text-2xl font-bold font-heading"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            onMouseEnter={onLinkHover}
-            onMouseLeave={onLinkLeave}
-          >
-            <span className="text-primary-500">Bharath</span>Reddy
-          </motion.a>
+    <header className="fixed top-0 left-0 right-0 z-50 py-4 px-4 sm:px-8 transition-all duration-300 pointer-events-none">
+      <div className="max-w-6xl mx-auto flex items-center justify-between">
+        {/* Brand Monospace Logo Pill */}
+        <motion.a
+          href="#hero"
+          className="pointer-events-auto group flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-[#101017]/80 backdrop-blur-xl hover:border-[#fb4617]/50 transition-all duration-300 shadow-lg"
+          onMouseEnter={onLinkHover}
+          onMouseLeave={onLinkLeave}
+          whileHover={{ scale: 1.03 }}
+        >
+          <span className="w-2 h-2 rounded-full bg-[#fb4617] animate-ping" />
+          <span className="font-mono text-xs tracking-wider uppercase text-white font-medium">
+            BHARATH <span className="text-white/40">//</span> CSE-AI
+          </span>
+        </motion.a>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navLinks.map((item) => (
-              <motion.a
-                key={item.label}
-                href={item.href}
-                className="text-sm font-medium hover:text-primary-400 transition-colors relative group"
-                whileHover={{ y: -2 }}
-                transition={{ type: 'spring', stiffness: 500 }}
-                onMouseEnter={onLinkHover}
-                onMouseLeave={onLinkLeave}
-                target={item.href.startsWith('#') ? undefined : '_blank'}
-                rel={item.href.startsWith('#') ? undefined : 'noopener noreferrer'}
-              >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
-              </motion.a>
-            ))}
-          </nav>
+        {/* Center Floating Glass Navigation Pill (Desktop) */}
+        <nav className="hidden md:flex pointer-events-auto items-center gap-1 px-3 py-1.5 rounded-full border border-white/10 bg-[#101017]/80 backdrop-blur-xl shadow-xl">
+          {navLinks.map((item) => (
+            <motion.a
+              key={item.label}
+              href={item.href}
+              className="px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wide text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
+              onMouseEnter={onLinkHover}
+              onMouseLeave={onLinkLeave}
+            >
+              {item.label}
+            </motion.a>
+          ))}
+        </nav>
 
-          <div className="hidden md:flex items-center space-x-4">
-            {socialLinks.map((social, index) => {
-              const Icon = social.icon;
-              return (
-                <motion.a
-                  key={social.label}
-                  href={social.href}
-                  className="text-gray-400 hover:text-primary-500 transition-colors"
-                  whileHover={{ scale: 1.2, rotate: 5 }}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * index, duration: 0.3 }}
-                  onMouseEnter={onLinkHover}
-                  onMouseLeave={onLinkLeave}
-                  aria-label={social.label}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Icon size={20} />
-                </motion.a>
-              );
-            })}
+        {/* Right CTA Status & Socials */}
+        <div className="hidden sm:flex pointer-events-auto items-center gap-3">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-400 text-[11px] font-mono tracking-wider">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            AVAILABLE FOR WORK
           </div>
 
-          {/* Mobile Menu Button */}
-          <button 
-            className="md:hidden text-white"
-            onClick={toggleMobileMenu}
+          <a
+            href="#contact"
+            className="flex items-center gap-1 px-4 py-1.5 rounded-full bg-[#fb4617] hover:bg-[#ff5526] text-white text-xs font-mono font-medium tracking-wide transition-all shadow-md"
             onMouseEnter={onLinkHover}
             onMouseLeave={onLinkLeave}
-            aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+            LET'S TALK <ArrowUpRight size={14} />
+          </a>
         </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="pointer-events-auto md:hidden p-2.5 rounded-full border border-white/10 bg-[#101017]/80 backdrop-blur-xl text-white"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle Navigation"
+        >
+          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
       </div>
 
-      {/* Mobile Menu */}
-      <motion.div 
-        className={`md:hidden ${mobileMenuOpen ? 'block' : 'hidden'}`}
-        initial={{ opacity: 0, height: 0 }}
-        animate={{ 
-          opacity: mobileMenuOpen ? 1 : 0, 
-          height: mobileMenuOpen ? 'auto' : 0 
-        }}
-        transition={{ duration: 0.3 }}
-      >
-        <div className="container mx-auto px-6 py-4 bg-dark-200">
-          <nav className="flex flex-col space-y-4">
-            {navLinks.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-lg font-medium hover:text-primary-400 transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-                onMouseEnter={onLinkHover}
-                onMouseLeave={onLinkLeave}
-                target={item.href.startsWith('#') ? undefined : '_blank'}
-                rel={item.href.startsWith('#') ? undefined : 'noopener noreferrer'}
-              >
-                {item.label}
-              </a>
-            ))}
-            <div className="flex items-center space-x-4 pt-4">
-              {socialLinks.map((social) => {
-                const Icon = social.icon;
-                return (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    className="text-gray-400 hover:text-primary-500 transition-colors"
-                    onMouseEnter={onLinkHover}
-                    onMouseLeave={onLinkLeave}
-                    aria-label={social.label}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Icon size={20} />
-                  </a>
-                );
-              })}
+      {/* Mobile Drawer Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="pointer-events-auto md:hidden mt-3 max-w-6xl mx-auto rounded-2xl border border-white/10 bg-[#101017]/95 backdrop-blur-2xl p-6 shadow-2xl"
+          >
+            <div className="flex flex-col gap-4">
+              {navLinks.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="font-mono text-sm tracking-wide text-white/80 hover:text-[#fb4617] py-1 border-b border-white/5 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              ))}
+              <div className="flex items-center gap-4 pt-2">
+                {socialLinks.map((social) => {
+                  const Icon = social.icon;
+                  return (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full bg-white/5 text-white/70 hover:text-[#fb4617] transition-colors"
+                    >
+                      <Icon size={18} />
+                    </a>
+                  );
+                })}
+              </div>
             </div>
-          </nav>
-        </div>
-      </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

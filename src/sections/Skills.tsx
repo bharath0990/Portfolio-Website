@@ -1,163 +1,344 @@
-import { motion } from 'framer-motion';
 import React from 'react';
-import { fadeInUp, staggerContainer, useScrollAnimation } from '../../hooks/useScrollAnimation';
-import ProjectCard from '../components/ProjectCard';
+import { motion } from 'framer-motion';
+import { Cpu, Code2, Database, Wrench, ExternalLink, Github, TrendingUp, BarChart3, Activity } from 'lucide-react';
+import TiltCard from '../components/TiltCard';
 
 interface SkillsProps {
-  onLinkHover: () => void;
-  onLinkLeave: () => void;
+  onLinkHover?: () => void;
+  onLinkLeave?: () => void;
+  isActive?: boolean;
 }
 
+const skillCategories = [
+  {
+    title: 'Programming Languages',
+    icon: Code2,
+    accent: '#fb4617',
+    skills: [
+      { name: 'Java', icon: './java.png' },
+      { name: 'SQL', icon: './sql-server.png' },
+      { name: 'Python (Beginner)', icon: './python.png' },
+    ],
+  },
+  {
+    title: 'Databases & Cloud',
+    icon: Database,
+    accent: '#3b82f6',
+    skills: [
+      { name: 'MySQL', icon: './sql-server.png' },
+      { name: 'PostgreSQL', icon: './sql-server.png' },
+      { name: 'Supabase', icon: './oracle.png' },
+      { name: 'Oracle DB', icon: './oracle.png' },
+    ],
+  },
+  {
+    title: 'Frameworks & Frontend/Mobile',
+    icon: Cpu,
+    accent: '#8b5cf6',
+    skills: [
+      { name: 'React.js', icon: './react.png' },
+      { name: 'Flutter', icon: './react.png' },
+      { name: 'Java Swing', icon: './java.png' },
+      { name: 'JDBC', icon: './java.png' },
+    ],
+  },
+  {
+    title: 'Tools & Core Concepts',
+    icon: Wrench,
+    accent: '#10b981',
+    skills: [
+      { name: 'Git & GitHub', icon: './github.png' },
+      { name: 'Eclipse IDE', icon: './Eclipse-IDE.png' },
+      { name: 'VS Code', icon: './vscode.png' },
+      { name: 'OOP Principles', icon: './java.png' },
+      { name: 'Data Structures & Algorithms', icon: './java.png' },
+    ],
+  },
+];
+
+const featuredProjects = [
+  {
+    title: 'Campus Connect – Accommodation & Roommate Matcher',
+    description: 'Full-stack platform built for AI hackathon with a Flutter mobile app and React.js dashboard. Features GPS search, real-time messaging, and Supabase PostgreSQL.',
+    tags: ['Flutter', 'React.js', 'Supabase', 'PostgreSQL', 'Git/GitHub'],
+    github: 'https://github.com/bharath0990/Campus_Connect',
+    demo: 'https://github.com/bharath0990/Campus_Connect',
+  },
+  {
+    title: 'Student Management System',
+    description: 'Desktop application using Java Swing, JDBC, and MySQL featuring password hashing, roll number/email input validation, multi-field search, and layered DAO architecture.',
+    tags: ['Java Swing', 'JDBC', 'MySQL', 'Authentication', 'DAO Layer'],
+    github: 'https://github.com/bharath0990/Student-Management-System',
+    demo: 'https://github.com/bharath0990/Student-Management-System',
+  },
+  {
+    title: 'Library Management System',
+    description: 'Desktop application to manage book inventory, member records, and issue/return tracking using Core Java and JDBC across 10+ classes applying OOP principles.',
+    tags: ['Core Java', 'JDBC', 'OOP Principles', 'Automation'],
+    github: 'https://github.com/bharath0990/Library-Management-System',
+    demo: 'https://github.com/bharath0990/Library-Management-System',
+  },
+];
+
 const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave }) => {
-  const { ref, controls } = useScrollAnimation(0.1, false);
-
-  const frontendSkills = [
-    { name: 'HTML5', logo: <img src="./html.png" alt="HTML5" className="w-12 h-12 object-contain" /> },
-    { name: 'CSS3', logo: <img src="./css-3.png" alt="CSS3" className="w-12 h-12 object-contain" /> },
-    { name: 'Figma', logo: <img src="./figma.png" alt="Figma" className="w-12 h-12 object-contain" /> },
-  ];
-
-  const backendSkills = [
-    { name: 'Python', logo: <img src="./python.png" alt="Python" className="w-12 h-12 object-contain" /> },
-    { name: 'Java', logo: <img src="./java.png" alt="Java" className="w-12 h-12 object-contain" /> },
-    { name: 'C++', logo: <img src="./c-.png" alt="C++" className="w-12 h-12 object-contain" /> },
-    { name: 'C', logo: <img src="./letter-c.png" alt="C" className="w-12 h-12 object-contain" /> },
-    { name: 'SQL', logo: <img src="./sql-server.png" alt="SQL" className="w-12 h-12 object-contain" /> },
-    { name: 'Oracle', logo: <img src="./oracle.png" alt="Oracle" className="w-12 h-12 object-contain" /> },
-  ];
-
-  const toolsSkills = [
-    { name: 'Git', logo: <img src="./github.png" alt="Git" className="w-12 h-12 object-contain" /> },
-    { name: 'Git Bash', logo: <img src="./Git-Bash.png" alt="Bash" className="w-12 h-12 object-contain" /> },
-    { name: 'Eclipse', logo: <img src="./Eclipse-IDE.png" alt="Eclipse" className="w-12 h-12 object-contain" /> },
-  ];
-
-  const projects = [
-    {
-      title: 'AI Based Attendance System using Face Recognition',
-      description: 'Face recognition attendance system using Python, OpenCV, and Tkinter. Auto-detects faces to mark attendance in real-time.',
-      image: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&fit=crop&w=600&q=80',
-      tags: ['Python', 'OpenCV', 'Tkinter', 'SQLite'],
-      liveUrl: 'https://github.com/bharath0990/AI-Based-Attendance-System-using-Face-Recognition',
-      githubUrl: 'https://github.com/bharath0990/AI-Based-Attendance-System-using-Face-Recognition',
-    },
-    {
-      title: 'Academic Performance',
-      description: 'A web app to visualize and analyze academic performance data for students and institutions.',
-      image: 'https://images.pexels.com/photos/256401/pexels-photo-256401.jpeg?auto=compress&fit=crop&w=600&q=80',
-      tags: ['React', 'Charts', 'Visualization', 'Education'],
-      liveUrl: 'https://bharath0990.github.io/Academic-Performance/',
-      githubUrl: 'https://github.com/bharath0990/Academic-Performance',
-    },
-    {
-      title: 'Real-time Chat App',
-      description: 'A real-time messaging app with video calls, file sharing, and encryption.',
-      image: 'https://images.pexels.com/photos/7014337/pexels-photo-7014337.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      tags: ['WebSockets', 'React', 'Node.js', 'Firebase'],
-      liveUrl: '#',
-      githubUrl: '#',
-    },
-  ];
-
-  const renderSkill = (skill: { name: string; logo: JSX.Element }, index: number) => (
-    <motion.div
-      key={`${skill.name}-${index}`}
-      className="group flex flex-col items-center justify-center relative cursor-pointer mx-4"
-      onMouseEnter={onLinkHover}
-      onMouseLeave={onLinkLeave}
-      whileHover={{ scale: 1.1, y: -5 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-    >
-      <div className="w-20 h-20 flex items-center justify-center rounded-full bg-dark-200/80 border-2 border-gray-600 shadow-lg transition-all duration-200 mb-3">
-        {skill.logo}
-      </div>
-      <div className="text-center">
-        <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">
-          {skill.name}
-        </span>
-      </div>
-    </motion.div>
-  );
-
-  const renderSkillCategory = (title: string, skills: typeof frontendSkills, color: string) => (
-    <motion.div
-      className="mb-12"
-      initial="hidden"
-      animate={controls}
-      variants={fadeInUp}
-    >
-      <motion.h3
-        className={`text-2xl font-bold mb-6 text-center ${color}`}
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        {title}
-      </motion.h3>
-      <motion.div
-        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8"
-        initial="hidden"
-        animate={controls}
-        variants={staggerContainer}
-      >
-        {skills.map((skill, index) => renderSkill(skill, index))}
-      </motion.div>
-    </motion.div>
-  );
-
   return (
-    <div ref={ref} className="container mx-auto px-6 py-20 relative">
-      {/* Background glow effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-        <div className="absolute top-3/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl" />
-      </div>
-      <motion.div
-        className="mb-16 text-center relative z-10"
-        initial="hidden"
-        animate={controls}
-        variants={fadeInUp}
-      >
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">
-          <span className="text-primary-500">Skills</span> & Future Projects
-        </h2>
-        <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-          Technical expertise and tools I work with
+    <section id="skills" className="py-24 px-6 max-w-6xl mx-auto relative z-10">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-14 border-b border-white/10 pb-6">
+        <div>
+          <div className="flex items-center gap-2 font-mono text-xs text-[#fb4617] tracking-widest uppercase mb-2">
+            <Cpu size={14} /> TECHNICAL SKILLS & PROJECTS
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold font-heading text-white tracking-tight">
+            Technical Stack & <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fb4617] via-orange-400 to-yellow-300">
+              Software Engineering Portfolio
+            </span>
+          </h2>
+        </div>
+        <p className="text-white/60 font-mono text-xs max-w-xs uppercase leading-relaxed">
+          Technical skills, databases, frameworks, and projects from resume.
         </p>
-      </motion.div>
-      
-      {/* Skills Categories */}
-      <div className="relative z-10">
-        {renderSkillCategory('Frontend Development', frontendSkills, 'text-blue-400')}
-        {renderSkillCategory('Backend Development', backendSkills, 'text-green-400')}
-        {renderSkillCategory('Tools & IDEs', toolsSkills, 'text-purple-400')}
+      </div>
+
+      {/* Skills Matrix (4 Columns) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+        {skillCategories.map((cat, idx) => {
+          const Icon = cat.icon;
+          return (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              viewport={{ once: false, amount: 0.2 }}
+            >
+              <TiltCard maxRotate={10} className="p-6 h-full flex flex-col justify-between border-white/10 bg-[#101017]/90 hover:border-[#fb4617]/40">
+                <div>
+                  <div className="flex items-center gap-3 mb-6 pb-3 border-b border-white/10">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center text-white"
+                      style={{ backgroundColor: `${cat.accent}20`, border: `1px solid ${cat.accent}40` }}
+                    >
+                      <Icon size={20} style={{ color: cat.accent }} />
+                    </div>
+                    <h3 className="font-bold text-base text-white font-heading">{cat.title}</h3>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    {cat.skills.map((skill, sIdx) => (
+                      <motion.div
+                        key={sIdx}
+                        whileHover={{ scale: 1.05 }}
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] transition-all"
+                        onMouseEnter={onLinkHover}
+                        onMouseLeave={onLinkLeave}
+                      >
+                        <img
+                          src={skill.icon}
+                          alt={skill.name}
+                          className="w-4 h-4 object-contain"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                        <span className="font-mono text-xs text-white/90 font-medium">{skill.name}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </TiltCard>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Engineering Analytics & DSA Performance Graphs */}
+      <div className="mb-20">
+        <TiltCard maxRotate={6} className="p-8 border-white/10 bg-[#101017]/90 shadow-2xl">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8">
+            <div>
+              <div className="flex items-center gap-2 font-mono text-xs text-[#fb4617] tracking-widest uppercase mb-1">
+                <Activity size={14} /> METRICS & ALGORITHMIC PERFORMANCE
+              </div>
+              <h3 className="text-2xl font-bold font-heading text-white">
+                Engineering & DSA Growth Graph
+              </h3>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs font-semibold">
+                30+ LEETCODE PROBLEMS
+              </span>
+              <span className="px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 font-mono text-xs font-semibold">
+                JAVA & SQL ARCHITECTURE
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Graph 1: Vector Line Graph of Problem Solving Curve */}
+            <div className="lg:col-span-7 space-y-4">
+              <div className="flex items-center justify-between font-mono text-xs text-white/60">
+                <span className="flex items-center gap-2 text-white"><TrendingUp size={16} className="text-[#fb4617]" /> Algorithmic Mastery Growth</span>
+                <span>2024 - Present</span>
+              </div>
+              
+              {/* SVG Vector Curve Graph */}
+              <div className="relative h-48 w-full bg-white/[0.02] border border-white/10 rounded-xl p-4 flex flex-col justify-between overflow-hidden">
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:24px_24px]" />
+                
+                <svg className="w-full h-full overflow-visible relative z-10" viewBox="0 0 500 120">
+                  <defs>
+                    <linearGradient id="curveGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#fb4617" stopOpacity="0.4" />
+                      <stop offset="100%" stopColor="#fb4617" stopOpacity="0.0" />
+                    </linearGradient>
+                  </defs>
+                  
+                  {/* Fill Under Curve */}
+                  <path
+                    d="M 10 100 Q 100 85, 200 65 T 350 35 T 490 15 L 490 110 L 10 110 Z"
+                    fill="url(#curveGradient)"
+                  />
+
+                  {/* Main Curve Line */}
+                  <path
+                    d="M 10 100 Q 100 85, 200 65 T 350 35 T 490 15"
+                    fill="none"
+                    stroke="#fb4617"
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                  />
+
+                  {/* Graph Data Points */}
+                  {[
+                    { x: 10, y: 100, val: 'Start' },
+                    { x: 130, y: 80, val: 'Arrays' },
+                    { x: 250, y: 55, val: 'OOP & SQL' },
+                    { x: 370, y: 30, val: 'DSA' },
+                    { x: 490, y: 15, val: '30+ Solved' },
+                  ].map((pt, idx) => (
+                    <g key={idx}>
+                      <circle cx={pt.x} cy={pt.y} r="5" fill="#101017" stroke="#fb4617" strokeWidth="2.5" />
+                      <text x={pt.x} y={pt.y - 12} fill="#ffffff90" fontSize="9" fontFamily="monospace" textAnchor="middle">
+                        {pt.val}
+                      </text>
+                    </g>
+                  ))}
+                </svg>
+
+                <div className="flex justify-between font-mono text-[10px] text-white/40 pt-2 border-t border-white/5 relative z-10">
+                  <span>Q1 2024</span>
+                  <span>Q2 2024</span>
+                  <span>Q3 2024</span>
+                  <span>Q4 2024</span>
+                  <span>Present</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Graph 2: Technical Skill Bar Analytics */}
+            <div className="lg:col-span-5 space-y-4">
+              <div className="flex items-center justify-between font-mono text-xs text-white/60">
+                <span className="flex items-center gap-2 text-white"><BarChart3 size={16} className="text-[#38bdf8]" /> Domain Proficiency Breakdown</span>
+                <span>Score %</span>
+              </div>
+
+              <div className="space-y-3.5 bg-white/[0.02] border border-white/10 rounded-xl p-5">
+                {[
+                  { label: 'Java & OOP Principles', val: 92, color: '#fb4617' },
+                  { label: 'SQL & MySQL Databases', val: 90, color: '#38bdf8' },
+                  { label: 'Data Structures & Algorithms', val: 86, color: '#f59e0b' },
+                  { label: 'Full-Stack (Flutter & React)', val: 84, color: '#10b981' },
+                ].map((bar, bIdx) => (
+                  <div key={bIdx} className="space-y-1">
+                    <div className="flex justify-between text-xs font-mono">
+                      <span className="text-white/80">{bar.label}</span>
+                      <span className="font-bold" style={{ color: bar.color }}>{bar.val}%</span>
+                    </div>
+                    <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/10">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${bar.val}%` }}
+                        transition={{ duration: 0.8, delay: bIdx * 0.1 }}
+                        viewport={{ once: false }}
+                        className="h-full rounded-full"
+                        style={{ backgroundColor: bar.color }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </TiltCard>
       </div>
 
       {/* Projects */}
-      <motion.h3
-        className="text-2xl font-semibold mb-8 text-center relative z-10"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        Featured Projects
-      </motion.h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
-        {projects.map((project, index) => (
-          <ProjectCard
-            key={index}
-            title={project.title}
-            description={project.description}
-            image={project.image}
-            tags={project.tags}
-            liveUrl={project.liveUrl}
-            githubUrl={project.githubUrl}
-            onHover={onLinkHover}
-            onLeave={onLinkLeave}
-          />
-        ))}
+      <div className="space-y-8">
+        <div className="flex items-center justify-between border-b border-white/10 pb-4">
+          <h3 className="text-2xl font-bold font-heading text-white">Featured Projects</h3>
+          <span className="font-mono text-xs text-white/40 uppercase tracking-wider">LIVE LINKS & GITHUB</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {featuredProjects.map((proj, pIdx) => (
+            <motion.div key={pIdx} whileHover={{ y: -5 }}>
+              <TiltCard maxRotate={12} className="p-6 h-full flex flex-col justify-between border-white/10 bg-[#101017]/90 hover:border-[#fb4617]/50">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[10px] text-[#fb4617] uppercase tracking-wider font-bold">
+                      PROJECT 0{pIdx + 1}
+                    </span>
+                    <a
+                      href={proj.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/40 hover:text-white transition-colors"
+                      onMouseEnter={onLinkHover}
+                      onMouseLeave={onLinkLeave}
+                    >
+                      <Github size={18} />
+                    </a>
+                  </div>
+
+                  <h4 className="font-bold text-lg text-white font-heading leading-snug">
+                    {proj.title}
+                  </h4>
+
+                  <p className="text-xs text-white/60 font-light leading-relaxed">
+                    {proj.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5 pt-2">
+                    {proj.tags.map((tag) => (
+                      <span key={tag} className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-white/70">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-white/10 mt-6 flex items-center justify-between">
+                  <a
+                    href={proj.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-xs font-mono font-bold text-white hover:text-[#fb4617] transition-colors"
+                    onMouseEnter={onLinkHover}
+                    onMouseLeave={onLinkLeave}
+                  >
+                    <span>OPEN REPO</span>
+                    <ExternalLink size={12} />
+                  </a>
+                </div>
+              </TiltCard>
+            </motion.div>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

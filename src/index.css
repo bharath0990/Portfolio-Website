@@ -9,7 +9,7 @@
 }
 
 html {
-  scroll-behavior: auto; /* Disable smooth scrolling for better performance */
+  scroll-behavior: smooth;
 }
 
 body {

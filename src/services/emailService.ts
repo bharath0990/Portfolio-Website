@@ -1,9 +1,9 @@
 import emailjs from '@emailjs/browser';
 
-// EmailJS configuration - Replace these with your actual values from EmailJS dashboard
-const EMAILJS_SERVICE_ID = 'service_portfolio'; // From EmailJS Email Services
-const EMAILJS_TEMPLATE_ID = 'template_portfolio'; // From EmailJS Email Templates  
-const EMAILJS_PUBLIC_KEY = 'gcwCO9YP4RKD70Rzu'; // From EmailJS Account → General
+// EmailJS configuration
+const EMAILJS_SERVICE_ID = 'service_2cz8kas';
+const EMAILJS_TEMPLATE_ID = 'template_oiynggb';
+const EMAILJS_PUBLIC_KEY = 'o064TqIQcXDXxUh66';
 
 export interface ContactFormData {
   name: string;
@@ -14,11 +14,14 @@ export interface ContactFormData {
 export const sendContactEmail = async (formData: ContactFormData): Promise<boolean> => {
   try {
     const templateParams = {
+      name: formData.name,
+      email: formData.email,
       from_name: formData.name,
       from_email: formData.email,
       message: formData.message,
       reply_to: formData.email,
-      to_name: 'Bharath Kumar Reddy',
+      to_name: 'P. Bharath Kumar Reddy',
+      title: 'Portfolio Website',
     };
 
     const response = await emailjs.send(

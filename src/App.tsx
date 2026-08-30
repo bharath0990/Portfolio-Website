@@ -1,28 +1,23 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import Cursor from './components/Cursor';
 import Header from './components/Header';
-import Navigation from './components/Navigation';
 import ScrollProgress from './components/ScrollProgress';
 import ScrollToTop from './components/ScrollToTop';
+import ThreeBackground from './components/ThreeBackground';
 import Achievements from './sections/Achievements';
 import Contact from './sections/Contact';
 import Education from './sections/Education';
 import Hero from './sections/Hero';
-import Intro from './sections/Intro';
 import Skills from './sections/Skills';
 
 function App() {
   const [activeSection, setActiveSection] = useState(0);
   const sectionsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [cursorVariant, setCursorVariant] = useState<'default' | 'link'>('default');
 
   const sections = [
-    { id: 'intro', component: Intro, label: 'Intro' },
-    { id: 'hero', component: Hero, label: 'About' },
+    { id: 'hero', component: Hero, label: 'About & Profile' },
     { id: 'achievements', component: Achievements, label: 'Achievements' },
     { id: 'education', component: Education, label: 'Education' },
-    { id: 'skills', component: Skills, label: 'Skills' },
+    { id: 'skills', component: Skills, label: 'Skills & Projects' },
     { id: 'contact', component: Contact, label: 'Contact' },
   ];
 
@@ -53,50 +48,25 @@ function App() {
       });
     };
 
-    let lastMouseMove = 0;
-    const handleMouseMoveThrottled = (e: MouseEvent) => {
-      const now = Date.now();
-      if (now - lastMouseMove > 16) { // ~60fps
-        lastMouseMove = now;
-        setCursorPosition({ x: e.clientX, y: e.clientY });
-      }
-    };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('mousemove', handleMouseMoveThrottled, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('mousemove', handleMouseMoveThrottled);
       if (animationFrameId !== null) {
         cancelAnimationFrame(animationFrameId);
       }
     };
   }, [updateActiveSection]);
 
-  const scrollToSection = (index: number) => {
-    if (sectionsRef.current[index]) {
-      const targetPosition = sectionsRef.current[index].offsetTop;
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'auto', // Changed from smooth to auto for better performance
-      });
-    }
-  };
-
-  const handleLinkHover = () => {
-    setCursorVariant('link');
-  };
-
-  const handleLinkLeave = () => {
-    setCursorVariant('default');
-  };
-
   return (
-    <div className="bg-dark-300 text-white min-h-screen">
+    <div className="bg-[#08080c] text-white min-h-screen relative font-sans selection:bg-[#fb4617] selection:text-white">
+      {/* WebGL 3D Background */}
+      <ThreeBackground />
+
       <ScrollProgress />
-      <Header onLinkHover={handleLinkHover} onLinkLeave={handleLinkLeave} />
-      <main className="relative">
+      <Header />
+      
+      <main className="relative z-10">
         {sections.map((section, index) => {
           const SectionComponent = section.component;
           return (
@@ -106,26 +76,15 @@ function App() {
               ref={(el) => {
                 sectionsRef.current[index] = el as HTMLDivElement | null;
               }}
-              className="min-h-screen"
+              className="relative"
             >
-              <SectionComponent
-                onLinkHover={handleLinkHover}
-                onLinkLeave={handleLinkLeave}
-                isActive={activeSection === index}
-              />
+              <SectionComponent isActive={activeSection === index} />
             </section>
           );
         })}
-        <Navigation
-          sections={sections}
-          activeSection={activeSection}
-          onNavigate={scrollToSection}
-          onLinkHover={handleLinkHover}
-          onLinkLeave={handleLinkLeave}
-        />
       </main>
-      <ScrollToTop onHover={handleLinkHover} onLeave={handleLinkLeave} />
-      <Cursor position={cursorPosition} variant={cursorVariant} />
+
+      <ScrollToTop />
     </div>
   );
 }

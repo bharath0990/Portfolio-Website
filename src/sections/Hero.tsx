@@ -1,197 +1,201 @@
-import { motion } from 'framer-motion';
-import { Calendar, Code, Database, Mail, MapPin, Server } from 'lucide-react';
 import React from 'react';
-import AnimatedText from '../components/AnimatedText';
-import { fadeInLeft, fadeInRight, useScrollAnimation } from '../../hooks/useScrollAnimation';
+import { motion } from 'framer-motion';
+import { Mail, MapPin, GraduationCap, Download, Code2, Sparkles, Layers, Terminal, ArrowDownRight } from 'lucide-react';
+import TiltCard from '../components/TiltCard';
 
-const Hero: React.FC = () => {
-  const { ref, controls } = useScrollAnimation(0.3);
+interface HeroProps {
+  onLinkHover?: () => void;
+  onLinkLeave?: () => void;
+  isActive?: boolean;
+}
 
+const marqueeItems = [
+  'JAVA & OBJECT-ORIENTED PROGRAMMING',
+  'DATA STRUCTURES & ALGORITHMS',
+  'SQL & MYSQL DATABASE ARCHITECTURE',
+  'CAMPUS CONNECT (BUILD WITH AI)',
+  'FLUTTER & REACT.JS FULL STACK',
+  'ORACLE CERTIFIED JAVA DEVELOPER',
+];
+
+const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave }) => {
   return (
-    <div
-      ref={ref}
-      className="container mx-auto px-6 pt-32 pb-20 flex flex-col md:flex-row items-center gap-8 md:gap-16"
-    >
-      <motion.div
-        className="w-full md:w-1/2 order-2 md:order-1"
-        initial="hidden"
-        animate={controls}
-        variants={fadeInLeft}
-      >
+    <section id="hero" className="pt-28 pb-16 min-h-screen flex flex-col justify-between relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6 w-full relative z-10 my-auto">
+        
+        {/* Monospaced Status Badge */}
         <motion.div
-          className="mb-16 text-center"
-          initial="hidden"
-          animate={controls}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8"
         >
-          <motion.h2
-            className="text-3xl md:text-4xl font-bold mb-4"
-            initial={{ opacity: 0, scale: 0.5, rotateX: -90 }}
-            animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-            transition={{ 
-              duration: 0.6, 
-              ease: [0.25, 0.46, 0.45, 0.94],
-              type: "spring",
-              stiffness: 100,
-              damping: 15
-            }}
-          >
-            <span className="text-primary-500">About</span>
-          </motion.h2>
-
-          <motion.p
-            className="text-gray-300 text-lg max-w-2xl mx-auto"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ 
-              duration: 0.5, 
-              delay: 0.2,
-              ease: "easeOut"
-            }}
-          >
-            Get to know me better
-          </motion.p>
+          <Terminal size={14} className="text-[#fb4617]" />
+          <span className="font-mono text-xs text-white/80 tracking-wide uppercase">
+            HYDERABAD, INDIA <span className="text-white/30">|</span> B.E CSE (AI) • CGPA 8.2
+          </span>
         </motion.div>
 
-        <AnimatedText
-          text="A CSE (AI) student at Saveetha School of Engineering - Chennai, passionate about building smart and efficient tech solutions. I enjoy working with Java, Python, and web technologies, and I'm currently exploring AI, cloud, and automation. Always curious and eager to learn, I love turning ideas into real projects."
-          className="text-sky-600 text-opacity-70 font-bold mb-8 text-lg max-w-3xl mx-auto text-center"
-          delay={0.4}
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        {/* Bento Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          
+          {/* Left Column: Main Bio & Details (Span 7 cols) */}
           <motion.div
-            className="flex items-center text-gray-300"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="lg:col-span-7 flex flex-col justify-between"
           >
-            <a
-              href="mailto:padakantibharath82@gmail.com"
-              className="flex items-center text-sm text-gray-300 hover:text-primary-500 transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Mail size={18} className="mr-2 text-primary-500" />
-              padakantibharath82@gmail.com
-            </a>
+            <TiltCard maxRotate={6} className="p-8 h-full flex flex-col justify-between border-white/10 bg-[#101017]/90 shadow-2xl">
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <span className="px-3 py-1 rounded-full border border-white/10 bg-white/5 font-mono text-[11px] text-[#fb4617] tracking-wider uppercase font-bold">
+                    SOFTWARE DEVELOPER & AI ENTHUSIAST
+                  </span>
+                  <span className="w-3 h-3 rounded-full bg-emerald-400/80 animate-pulse" />
+                </div>
+
+                <div className="space-y-2">
+                  <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight font-heading text-white leading-[1.1]">
+                    P. Bharath <br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-[#fb4617]">
+                      Kumar Reddy
+                    </span>
+                  </h1>
+                </div>
+
+                <p className="text-white/70 text-base font-light leading-relaxed">
+                  Motivated Computer Science (AI) student seeking an opportunity to start my career as a software developer, where I can utilize my skills in Java, SQL, programming, and problem solving to contribute to organizational growth and gain practical experience.
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  <div className="flex items-center gap-3 text-xs font-mono text-white/70">
+                    <Mail size={16} className="text-[#fb4617]" />
+                    <span className="truncate">padakantibharath82@gmail.com</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs font-mono text-white/70">
+                    <MapPin size={16} className="text-[#fb4617]" />
+                    <span>Hyderabad, India</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs font-mono text-white/70">
+                    <img src="./image.png" alt="Saveetha Logo" className="w-4 h-4 object-contain rounded-sm" />
+                    <span>Saveetha School of Engg</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs font-mono text-white/70">
+                    <Layers size={16} className="text-[#fb4617]" />
+                    <span>Java & SQL Specialist</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-8 flex flex-wrap items-center gap-4 border-t border-white/10 mt-6">
+                <a
+                  href="./P.Bharath Kumar Reddy_Resume.pdf"
+                  download="P_Bharath_Kumar_Reddy_Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#fb4617] text-white font-mono text-xs font-bold tracking-wider uppercase hover:bg-[#ff5526] transition-all shadow-md"
+                  onMouseEnter={onLinkHover}
+                  onMouseLeave={onLinkLeave}
+                >
+                  <Download size={14} /> DOWNLOAD RESUME
+                </a>
+                <a
+                  href="https://leetcode.com/u/bharath0990/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 font-mono text-xs font-semibold hover:bg-amber-500/20 transition-all"
+                  onMouseEnter={onLinkHover}
+                  onMouseLeave={onLinkLeave}
+                >
+                  <Code2 size={14} /> LEETCODE PROFILE
+                </a>
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-1.5 px-5 py-3 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 text-white font-mono text-xs tracking-wider uppercase font-semibold transition-all backdrop-blur-md"
+                  onMouseEnter={onLinkHover}
+                  onMouseLeave={onLinkLeave}
+                >
+                  <span>GET IN TOUCH</span>
+                  <ArrowDownRight size={14} />
+                </a>
+              </div>
+            </TiltCard>
           </motion.div>
 
+          {/* Right Column: Profile Picture Card & Stats (Span 5 cols) */}
           <motion.div
-            className="flex items-center text-gray-300"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="lg:col-span-5 flex flex-col justify-between gap-6"
           >
-            <Calendar size={18} className="mr-2 text-primary-500" />
-            <span className="text-sm">3rd Year B.Tech Student</span>
+            <TiltCard maxRotate={10} className="p-6 relative overflow-hidden bg-gradient-to-br from-[#12121c] to-[#0c0c14] border-white/10 flex-1 flex flex-col justify-between shadow-2xl">
+              <div className="flex flex-col items-center text-center space-y-4 my-auto">
+                <div className="w-40 h-44 sm:w-44 sm:h-48 rounded-3xl overflow-hidden border-2 border-[#fb4617]/60 bg-black/60 shadow-2xl relative p-1 bg-gradient-to-tr from-[#fb4617]/40 via-transparent to-[#3b82f6]/40">
+                  <img
+                    src="./profile.jpeg"
+                    alt="P. Bharath Kumar Reddy"
+                    className="w-full h-full object-cover object-top rounded-[22px]"
+                    style={{ objectPosition: 'center 0%' }}
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <p className="font-mono text-xs text-[#fb4617] font-semibold tracking-wider uppercase">B.E. CSE (AI) Student</p>
+                  <p className="font-mono text-[11px] text-white/60 flex items-center justify-center gap-1.5">
+                    <img src="./image.png" alt="Saveetha Logo" className="w-4 h-4 object-contain rounded-sm" />
+                    <span>Saveetha School of Engineering</span>
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 mt-6 pt-4 border-t border-white/10">
+                <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/5 text-center">
+                  <p className="font-mono text-2xl font-extrabold text-[#fb4617]">8.2</p>
+                  <p className="font-mono text-[10px] text-white/50 uppercase">Engineering CGPA</p>
+                </div>
+                <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/5 text-center">
+                  <p className="font-mono text-2xl font-extrabold text-amber-400">30+</p>
+                  <p className="font-mono text-[10px] text-white/50 uppercase">LeetCode Solved</p>
+                </div>
+              </div>
+            </TiltCard>
+
+            <TiltCard maxRotate={10} className="p-6 bg-[#101017]/90 border-white/10 flex items-center justify-between shadow-xl">
+              <div className="space-y-1">
+                <span className="font-mono text-[11px] text-[#fb4617] uppercase tracking-wider font-bold">HACKATHON & RECOGNITION</span>
+                <h5 className="font-bold text-white text-sm font-heading">Hexaware AI Innovation League</h5>
+                <p className="font-mono text-xs text-white/50">24-Hour AI Solution Hackathon Participant</p>
+              </div>
+              <div className="w-12 h-12 rounded-2xl bg-[#fb4617]/20 border border-[#fb4617]/40 flex items-center justify-center text-[#fb4617] flex-shrink-0">
+                <Sparkles size={20} />
+              </div>
+            </TiltCard>
           </motion.div>
 
-          <motion.div
-            className="flex items-center text-gray-300"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-          >
-            <MapPin size={18} className="mr-2 text-primary-500" />
-            <span className="text-sm">Hyderabad, India</span>
-          </motion.div>
-
-          <motion.div
-            className="flex items-center text-gray-300"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9 }}
-          >
-            <Database size={18} className="mr-2 text-primary-500" />
-            <span className="text-sm">B.Tech in CSE-AI (2023-2027)</span>
-          </motion.div>
         </div>
+      </div>
 
-        <div className="flex flex-wrap gap-4">
-          <motion.a
-            href="./P.Bharath Kumar Reddy_Resume.pdf"
-            download="Bharath_Kumar_Reddy_Resume.pdf"
-            className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1 }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Download Resume
-          </motion.a>
-
-          <motion.a
-            href="#contact"
-            className="px-6 py-3 border border-primary-500 text-primary-500 hover:bg-primary-500/10 rounded-lg font-medium transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1 }}
-          >
-            Contact Me
-          </motion.a>
+      {/* Kinetic Infinite Marquee Ticker */}
+      <div className="w-full border-y border-white/10 bg-[#0c0c12]/80 backdrop-blur-md py-3.5 overflow-hidden mt-16 pointer-events-none">
+        <div className="flex whitespace-nowrap animate-marquee">
+          {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, idx) => (
+            <div key={idx} className="flex items-center gap-8 mx-4">
+              <span className="font-mono text-xs tracking-[0.25em] text-white/70 font-semibold uppercase">
+                {item}
+              </span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#fb4617]" />
+            </div>
+          ))}
         </div>
-      </motion.div>
-
-      <motion.div
-        className="w-full md:w-1/2 order-1 md:order-2 flex justify-center"
-        initial="hidden"
-        animate={controls}
-        variants={fadeInRight}
-      >
-        <div className="relative w-72 h-72 md:w-96 md:h-96">
-          <motion.div
-            className="absolute inset-0 rounded-full overflow-hidden border-4 border-primary-500 bg-dark-200 shadow-2xl"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: 'spring', stiffness: 300 }}
-          >
-            <img
-              src="./profile.png"
-              alt="P. Bharath Kumar Reddy"
-              className="w-full h-full object-cover object-top"
-              onError={(e) => {
-                console.log('Image failed to load:', e);
-                // Fallback to a placeholder or hide the image
-                e.currentTarget.style.display = 'none';
-              }}
-            />
-          </motion.div>
-
-          {/* Tech stack circles */}
-          <motion.div
-            className="absolute -top-6 -right-6 w-20 h-20 bg-dark-200 rounded-full flex items-center justify-center border-4 border-primary-500 shadow-lg"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 1.2, type: 'spring' }}
-          >
-            <Code size={28} className="text-primary-500" />
-          </motion.div>
-
-          <motion.div
-            className="absolute -bottom-6 -left-6 w-20 h-20 bg-dark-200 rounded-full flex items-center justify-center border-4 border-primary-500 shadow-lg"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 1.4, type: 'spring' }}
-          >
-            <Server size={28} className="text-primary-500" />
-          </motion.div>
-
-          {/* Floating elements */}
-          <motion.div
-            className="absolute top-1/4 -left-8 w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center shadow-lg"
-            initial={{ scale: 0, rotate: 0 }}
-            animate={{ scale: 1, rotate: 360 }}
-            transition={{ delay: 1.6, type: 'spring', duration: 1 }}
-          >
-            <Database size={24} className="text-white" />
-          </motion.div>
-        </div>
-      </motion.div>
-    </div>
+      </div>
+    </section>
   );
 };
 
