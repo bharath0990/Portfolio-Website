@@ -49,68 +49,7 @@ const ThreeBackground: React.FC = () => {
     (gridHelper.material as THREE.Material).opacity = 0.22;
     scene.add(gridHelper);
 
-    // 2. 3D Mathematical Wave Plot Lines (Graph 1 & Graph 2)
-    const wavePoints1: THREE.Vector3[] = [];
-    for (let x = -35; x <= 35; x += 0.4) {
-      wavePoints1.push(new THREE.Vector3(x, Math.sin(x * 0.25) * 4.5 - 6, (x % 3) * 1.5 - 8));
-    }
-    const waveGeo1 = new THREE.BufferGeometry().setFromPoints(wavePoints1);
-    const waveMat1 = new THREE.LineBasicMaterial({ color: 0xfb4617, transparent: true, opacity: 0.4 });
-    const waveLine1 = new THREE.Line(waveGeo1, waveMat1);
-    scene.add(waveLine1);
-
-    const wavePoints2: THREE.Vector3[] = [];
-    for (let x = -35; x <= 35; x += 0.4) {
-      wavePoints2.push(new THREE.Vector3(x, Math.cos(x * 0.3) * 3.5 + 9, (x % 4) * 1.5 - 10));
-    }
-    const waveGeo2 = new THREE.BufferGeometry().setFromPoints(wavePoints2);
-    const waveMat2 = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.4 });
-    const waveLine2 = new THREE.Line(waveGeo2, waveMat2);
-    scene.add(waveLine2);
-
-    // 3. 3D Computer Science Graph Network (G = (V, E))
-    const nodeCount = 16;
-    const nodePositions: THREE.Vector3[] = [];
-    const graphGroup = new THREE.Group();
-
-    for (let i = 0; i < nodeCount; i++) {
-      const pos = new THREE.Vector3(
-        (Math.random() - 0.5) * 45,
-        (Math.random() - 0.5) * 35,
-        (Math.random() - 0.5) * 30 - 5
-      );
-      nodePositions.push(pos);
-
-      const nodeGeo = new THREE.SphereGeometry(0.35, 12, 12);
-      const nodeMat = new THREE.MeshBasicMaterial({ color: i % 2 === 0 ? 0xfb4617 : 0x38bdf8 });
-      const nodeMesh = new THREE.Mesh(nodeGeo, nodeMat);
-      nodeMesh.position.copy(pos);
-      graphGroup.add(nodeMesh);
-    }
-
-    const edgePoints: THREE.Vector3[] = [];
-    for (let i = 0; i < nodeCount; i++) {
-      for (let j = i + 1; j < nodeCount; j++) {
-        if (nodePositions[i].distanceTo(nodePositions[j]) < 18) {
-          edgePoints.push(nodePositions[i]);
-          edgePoints.push(nodePositions[j]);
-        }
-      }
-    }
-    const edgeGeo = new THREE.BufferGeometry().setFromPoints(edgePoints);
-    const edgeMat = new THREE.LineBasicMaterial({ color: 0x64748b, transparent: true, opacity: 0.3 });
-    const edgeLines = new THREE.LineSegments(edgeGeo, edgeMat);
-    graphGroup.add(edgeLines);
-    scene.add(graphGroup);
-
-    // 4. 3D Axes Graph Helper
-    const axesHelper = new THREE.AxesHelper(12);
-    (axesHelper.material as THREE.Material).transparent = true;
-    (axesHelper.material as THREE.Material).opacity = 0.35;
-    axesHelper.position.set(-22, -8, -5);
-    scene.add(axesHelper);
-
-    // 5. High-Density Java, SQL & Engineering Mathematics Sprites List
+    // 2. High-Density Java, SQL & Engineering Mathematics Sprites List
     const codeAndMathItems = [
       // JAVA CODE SNIPPETS (Orange / Gold / Cyan)
       { text: 'public static void main(String[] args)', color: '#fb4617' },
@@ -196,7 +135,7 @@ const ThreeBackground: React.FC = () => {
 
     scene.add(spriteGroup);
 
-    // 6. Wireframe Engineering Geometries
+    // 3. Wireframe Engineering Geometries
     const icosaGeo = new THREE.IcosahedronGeometry(8, 1);
     const icosaMat = new THREE.MeshBasicMaterial({
       color: 0xfb4617,
@@ -219,7 +158,7 @@ const ThreeBackground: React.FC = () => {
     octaMesh.position.set(-20, 12, -14);
     scene.add(octaMesh);
 
-    // 7. Binary & Engineering Particle Stream
+    // 4. Binary & Engineering Particle Stream
     const particleCount = 600;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
@@ -290,18 +229,6 @@ const ThreeBackground: React.FC = () => {
         item.sprite.position.x = item.initialX + Math.cos(elapsedTime * 0.5 + i) * 0.8;
       });
 
-      // Animate 3D Mathematical Wave Lines (Graphs)
-      waveLine1.rotation.y = elapsedTime * 0.05;
-      waveLine1.position.y = -6 - scrollY * 0.006 + Math.sin(elapsedTime * 0.8) * 0.5;
-
-      waveLine2.rotation.y = -elapsedTime * 0.04;
-      waveLine2.position.y = 9 - scrollY * 0.005 + Math.cos(elapsedTime * 0.7) * 0.5;
-
-      // Animate 3D Graph Network (Nodes & Edges)
-      graphGroup.rotation.y = elapsedTime * 0.08 + targetX * 0.2;
-      graphGroup.rotation.z = Math.sin(elapsedTime * 0.05) * 0.1;
-      graphGroup.position.y = -scrollY * 0.006;
-
       // Rotate 3D Polyhedra
       icosaMesh.rotation.x = elapsedTime * 0.12;
       icosaMesh.rotation.y = elapsedTime * 0.18;
@@ -336,13 +263,6 @@ const ThreeBackground: React.FC = () => {
       octaGeo.dispose();
       octaMat.dispose();
       gridHelper.dispose();
-      waveGeo1.dispose();
-      waveMat1.dispose();
-      waveGeo2.dispose();
-      waveMat2.dispose();
-      edgeGeo.dispose();
-      edgeMat.dispose();
-      axesHelper.dispose();
       renderer.dispose();
     };
   }, []);

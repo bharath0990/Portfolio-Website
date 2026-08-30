@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Cpu, Code2, Database, Wrench, ExternalLink, Github, TrendingUp, BarChart3, Activity } from 'lucide-react';
+import { Cpu, Code2, Database, Wrench, ExternalLink, Github } from 'lucide-react';
 import TiltCard from '../components/TiltCard';
 
 interface SkillsProps {
@@ -151,128 +151,6 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave }) => {
             </motion.div>
           );
         })}
-      </div>
-
-      {/* Engineering Analytics & DSA Performance Graphs */}
-      <div className="mb-20">
-        <TiltCard maxRotate={6} className="p-8 border-white/10 bg-[#101017]/90 shadow-2xl">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8">
-            <div>
-              <div className="flex items-center gap-2 font-mono text-xs text-[#fb4617] tracking-widest uppercase mb-1">
-                <Activity size={14} /> METRICS & ALGORITHMIC PERFORMANCE
-              </div>
-              <h3 className="text-2xl font-bold font-heading text-white">
-                Engineering & DSA Growth Graph
-              </h3>
-            </div>
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs font-semibold">
-                30+ LEETCODE PROBLEMS
-              </span>
-              <span className="px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 font-mono text-xs font-semibold">
-                JAVA & SQL ARCHITECTURE
-              </span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Graph 1: Vector Line Graph of Problem Solving Curve */}
-            <div className="lg:col-span-7 space-y-4">
-              <div className="flex items-center justify-between font-mono text-xs text-white/60">
-                <span className="flex items-center gap-2 text-white"><TrendingUp size={16} className="text-[#fb4617]" /> Algorithmic Mastery Growth</span>
-                <span>2024 - Present</span>
-              </div>
-              
-              {/* SVG Vector Curve Graph */}
-              <div className="relative h-48 w-full bg-white/[0.02] border border-white/10 rounded-xl p-4 flex flex-col justify-between overflow-hidden">
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:24px_24px]" />
-                
-                <svg className="w-full h-full overflow-visible relative z-10" viewBox="0 0 500 120">
-                  <defs>
-                    <linearGradient id="curveGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#fb4617" stopOpacity="0.4" />
-                      <stop offset="100%" stopColor="#fb4617" stopOpacity="0.0" />
-                    </linearGradient>
-                  </defs>
-                  
-                  {/* Fill Under Curve */}
-                  <path
-                    d="M 10 100 Q 100 85, 200 65 T 350 35 T 490 15 L 490 110 L 10 110 Z"
-                    fill="url(#curveGradient)"
-                  />
-
-                  {/* Main Curve Line */}
-                  <path
-                    d="M 10 100 Q 100 85, 200 65 T 350 35 T 490 15"
-                    fill="none"
-                    stroke="#fb4617"
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                  />
-
-                  {/* Graph Data Points */}
-                  {[
-                    { x: 10, y: 100, val: 'Start' },
-                    { x: 130, y: 80, val: 'Arrays' },
-                    { x: 250, y: 55, val: 'OOP & SQL' },
-                    { x: 370, y: 30, val: 'DSA' },
-                    { x: 490, y: 15, val: '30+ Solved' },
-                  ].map((pt, idx) => (
-                    <g key={idx}>
-                      <circle cx={pt.x} cy={pt.y} r="5" fill="#101017" stroke="#fb4617" strokeWidth="2.5" />
-                      <text x={pt.x} y={pt.y - 12} fill="#ffffff90" fontSize="9" fontFamily="monospace" textAnchor="middle">
-                        {pt.val}
-                      </text>
-                    </g>
-                  ))}
-                </svg>
-
-                <div className="flex justify-between font-mono text-[10px] text-white/40 pt-2 border-t border-white/5 relative z-10">
-                  <span>Q1 2024</span>
-                  <span>Q2 2024</span>
-                  <span>Q3 2024</span>
-                  <span>Q4 2024</span>
-                  <span>Present</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Graph 2: Technical Skill Bar Analytics */}
-            <div className="lg:col-span-5 space-y-4">
-              <div className="flex items-center justify-between font-mono text-xs text-white/60">
-                <span className="flex items-center gap-2 text-white"><BarChart3 size={16} className="text-[#38bdf8]" /> Domain Proficiency Breakdown</span>
-                <span>Score %</span>
-              </div>
-
-              <div className="space-y-3.5 bg-white/[0.02] border border-white/10 rounded-xl p-5">
-                {[
-                  { label: 'Java & OOP Principles', val: 92, color: '#fb4617' },
-                  { label: 'SQL & MySQL Databases', val: 90, color: '#38bdf8' },
-                  { label: 'Data Structures & Algorithms', val: 86, color: '#f59e0b' },
-                  { label: 'Full-Stack (Flutter & React)', val: 84, color: '#10b981' },
-                ].map((bar, bIdx) => (
-                  <div key={bIdx} className="space-y-1">
-                    <div className="flex justify-between text-xs font-mono">
-                      <span className="text-white/80">{bar.label}</span>
-                      <span className="font-bold" style={{ color: bar.color }}>{bar.val}%</span>
-                    </div>
-                    <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/10">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${bar.val}%` }}
-                        transition={{ duration: 0.8, delay: bIdx * 0.1 }}
-                        viewport={{ once: false }}
-                        className="h-full rounded-full"
-                        style={{ backgroundColor: bar.color }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-          </div>
-        </TiltCard>
       </div>
 
       {/* Projects */}
