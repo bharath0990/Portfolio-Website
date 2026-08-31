@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDownRight, Sparkles, Terminal, Cpu, Code2 } from 'lucide-react';
+import { ArrowDownRight, Sparkles, Terminal, Cpu, Code2, Github } from 'lucide-react';
 import TiltCard from '../components/TiltCard';
 
 interface IntroProps {
@@ -92,12 +92,24 @@ const Intro: React.FC<IntroProps> = ({ onLinkHover, onLinkLeave }) => {
                 href="https://leetcode.com/u/bharath0990/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 text-white font-mono text-xs tracking-wider uppercase font-semibold transition-all backdrop-blur-md"
+                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 text-white font-mono text-xs tracking-wider uppercase font-semibold transition-all backdrop-blur-md"
                 onMouseEnter={onLinkHover}
                 onMouseLeave={onLinkLeave}
               >
                 <Code2 size={16} className="text-amber-400" />
-                <span>LEETCODE 30+ SOLVED</span>
+                <span>LEETCODE PROFILE</span>
+              </a>
+
+              <a
+                href="https://github.com/bharath0990/Leet-Code-Problems"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 hover:border-amber-400/50 text-white font-mono text-xs tracking-wider uppercase font-semibold transition-all backdrop-blur-md"
+                onMouseEnter={onLinkHover}
+                onMouseLeave={onLinkLeave}
+              >
+                <Github size={16} className="text-amber-400" />
+                <span>LEETCODE REPO</span>
               </a>
             </motion.div>
           </div>

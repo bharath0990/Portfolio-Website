@@ -3,8 +3,8 @@ import { ChevronUp } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
 interface ScrollToTopProps {
-  onHover: () => void;
-  onLeave: () => void;
+  onHover?: () => void;
+  onLeave?: () => void;
 }
 
 const ScrollToTop: React.FC<ScrollToTopProps> = ({ onHover, onLeave }) => {

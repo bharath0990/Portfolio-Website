@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, ExternalLink, Download, CheckCircle2, Code2, Sparkles } from 'lucide-react';
+import { Trophy, ExternalLink, Download, CheckCircle2, Code2, Sparkles, Github } from 'lucide-react';
 
 import TiltCard from '../components/TiltCard';
 
@@ -44,8 +44,9 @@ const achievementsList = [
   {
     title: 'LeetCode 30+ Problems Solved',
     category: 'PROBLEM SOLVING & ALGORITHMS',
-    description: 'Demonstrated strong problem-solving skills in Data Structures & Algorithms with Java.',
+    description: 'Demonstrated strong problem-solving skills in Data Structures & Algorithms with Java. Code published on GitHub.',
     link: 'https://leetcode.com/u/bharath0990/',
+    githubRepo: 'https://github.com/bharath0990/Leet-Code-Problems',
     icon: Code2,
     accent: '#f59e0b',
   },
@@ -174,17 +175,33 @@ const Achievements: React.FC<AchievementsProps> = ({ onLinkHover, onLinkLeave })
                   <h4 className="font-bold text-lg text-white font-heading">{item.title}</h4>
                   <p className="text-xs text-white/60 font-light">{item.description}</p>
                 </div>
-                <a
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center border transition-all"
-                  style={{ backgroundColor: `${item.accent}15`, borderColor: `${item.accent}40`, color: item.accent }}
-                  onMouseEnter={onLinkHover}
-                  onMouseLeave={onLinkLeave}
-                >
-                  <Icon size={22} />
-                </a>
+                <div className="flex items-center gap-2">
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="LeetCode Profile"
+                    className="w-11 h-11 rounded-xl flex items-center justify-center border transition-all hover:scale-105"
+                    style={{ backgroundColor: `${item.accent}15`, borderColor: `${item.accent}40`, color: item.accent }}
+                    onMouseEnter={onLinkHover}
+                    onMouseLeave={onLinkLeave}
+                  >
+                    <Icon size={20} />
+                  </a>
+                  {item.githubRepo && (
+                    <a
+                      href={item.githubRepo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="GitHub Repository"
+                      className="w-11 h-11 rounded-xl flex items-center justify-center border border-white/10 bg-white/5 hover:border-amber-400/50 hover:bg-amber-400/10 text-white/80 hover:text-amber-400 transition-all hover:scale-105"
+                      onMouseEnter={onLinkHover}
+                      onMouseLeave={onLinkLeave}
+                    >
+                      <Github size={20} />
+                    </a>
+                  )}
+                </div>
               </TiltCard>
             </motion.div>
           );

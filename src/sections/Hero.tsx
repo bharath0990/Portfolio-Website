@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, GraduationCap, Download, Code2, Sparkles, Layers, Terminal, ArrowDownRight } from 'lucide-react';
+import { Mail, MapPin, Download, Code2, Sparkles, Layers, Terminal, ArrowDownRight, Github } from 'lucide-react';
 import TiltCard from '../components/TiltCard';
 
 interface HeroProps {
@@ -90,7 +90,7 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave }) => {
                 </div>
               </div>
 
-              <div className="pt-8 flex flex-wrap items-center gap-4 border-t border-white/10 mt-6">
+              <div className="pt-8 flex flex-wrap items-center gap-3 border-t border-white/10 mt-6">
                 <a
                   href="./P.Bharath Kumar Reddy_Resume.pdf"
                   download="P_Bharath_Kumar_Reddy_Resume.pdf"
@@ -106,15 +106,25 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave }) => {
                   href="https://leetcode.com/u/bharath0990/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 font-mono text-xs font-semibold hover:bg-amber-500/20 transition-all"
+                  className="inline-flex items-center gap-2 px-4 py-3 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 font-mono text-xs font-semibold hover:bg-amber-500/20 transition-all"
                   onMouseEnter={onLinkHover}
                   onMouseLeave={onLinkLeave}
                 >
                   <Code2 size={14} /> LEETCODE PROFILE
                 </a>
                 <a
+                  href="https://github.com/bharath0990/Leet-Code-Problems"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-3 rounded-full border border-white/15 bg-white/5 text-white font-mono text-xs font-semibold hover:bg-white/10 hover:border-amber-400/50 transition-all"
+                  onMouseEnter={onLinkHover}
+                  onMouseLeave={onLinkLeave}
+                >
+                  <Github size={14} className="text-amber-400" /> LEETCODE REPO
+                </a>
+                <a
                   href="#contact"
-                  className="inline-flex items-center gap-1.5 px-5 py-3 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 text-white font-mono text-xs tracking-wider uppercase font-semibold transition-all backdrop-blur-md"
+                  className="inline-flex items-center gap-1.5 px-4 py-3 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 text-white font-mono text-xs tracking-wider uppercase font-semibold transition-all backdrop-blur-md"
                   onMouseEnter={onLinkHover}
                   onMouseLeave={onLinkLeave}
                 >

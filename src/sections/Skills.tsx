@@ -27,7 +27,7 @@ const skillCategories = [
     skills: [
       { name: 'MySQL', icon: './sql-server.png' },
       { name: 'PostgreSQL', icon: './sql-server.png' },
-      { name: 'Supabase', icon: './oracle.png' },
+      { name: 'Supabase', icon: './supabase.png' },
       { name: 'Oracle DB', icon: './oracle.png' },
     ],
   },
@@ -63,6 +63,13 @@ const featuredProjects = [
     tags: ['Flutter', 'React.js', 'Supabase', 'PostgreSQL', 'Git/GitHub'],
     github: 'https://github.com/bharath0990/Campus_Connect',
     demo: 'https://github.com/bharath0990/Campus_Connect',
+  },
+  {
+    title: 'LeetCode Problems & DSA Solutions',
+    description: 'Comprehensive GitHub repository featuring solutions to 30+ Data Structures & Algorithms problems solved in Java, covering array manipulation, trees, dynamic programming, and optimization.',
+    tags: ['Java', 'Data Structures', 'Algorithms', 'LeetCode', 'Git/GitHub'],
+    github: 'https://github.com/bharath0990/Leet-Code-Problems',
+    demo: 'https://github.com/bharath0990/Leet-Code-Problems',
   },
   {
     title: 'Student Management System',
@@ -160,7 +167,7 @@ const Skills: React.FC<SkillsProps> = ({ onLinkHover, onLinkLeave }) => {
           <span className="font-mono text-xs text-white/40 uppercase tracking-wider">LIVE LINKS & GITHUB</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {featuredProjects.map((proj, pIdx) => (
             <motion.div key={pIdx} whileHover={{ y: -5 }}>
               <TiltCard maxRotate={12} className="p-6 h-full flex flex-col justify-between border-white/10 bg-[#101017]/90 hover:border-[#fb4617]/50">
