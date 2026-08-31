@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MapPin, Download, Code2, Sparkles, Layers, Terminal, ArrowDownRight, Github } from 'lucide-react';
 import TiltCard from '../components/TiltCard';
+import AnimatedCounter from '../components/AnimatedCounter';
 
 interface HeroProps {
   onLinkHover?: () => void;
@@ -171,7 +172,7 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave }) => {
                   <p className="font-mono text-[10px] text-white/50 uppercase">Engineering CGPA</p>
                 </div>
                 <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/5 text-center">
-                  <p className="font-mono text-2xl font-extrabold text-amber-400">30+</p>
+                  <AnimatedCounter to={30} suffix="+" className="font-mono text-2xl font-extrabold text-amber-400" />
                   <p className="font-mono text-[10px] text-white/50 uppercase">LeetCode Solved</p>
                 </div>
               </div>

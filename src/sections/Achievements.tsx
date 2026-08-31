@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Trophy, ExternalLink, Download, CheckCircle2, Code2, Sparkles, Github } from 'lucide-react';
 
 import TiltCard from '../components/TiltCard';
+import AnimatedCounter from '../components/AnimatedCounter';
 
 interface AchievementsProps {
   onLinkHover?: () => void;
@@ -42,9 +43,13 @@ const certificationsList = [
 
 const achievementsList = [
   {
-    title: 'LeetCode 30+ Problems Solved',
+    title: 'LeetCode Solutions & Algorithm Repository',
     category: 'PROBLEM SOLVING & ALGORITHMS',
-    description: 'Demonstrated strong problem-solving skills in Data Structures & Algorithms with Java. Code published on GitHub.',
+    description: 'Demonstrated strong problem-solving skills in Data Structures & Algorithms with Java across 30+ problems. GitHub repository contains optimized solutions & explanations.',
+    countTo: 30,
+    countSuffix: '+',
+    countLabel: 'Problems Solved',
+    tags: ['Java', 'Data Structures', 'Algorithms', 'LeetCode Repo'],
     link: 'https://leetcode.com/u/bharath0990/',
     githubRepo: 'https://github.com/bharath0990/Leet-Code-Problems',
     icon: Code2,
@@ -53,7 +58,8 @@ const achievementsList = [
   {
     title: 'Hexaware AI Innovation League',
     category: '24-HOUR AI HACKATHON',
-    description: 'Built real-world AI solutions addressing practical challenges in an intensive 24-hour hackathon.',
+    description: 'Built real-world AI solutions addressing practical challenges in an intensive 24-hour hackathon competition.',
+    tags: ['AI Solution', '24-Hour Hackathon', 'Teamwork'],
     link: 'https://github.com/bharath0990/',
     icon: Sparkles,
     accent: '#ec4899',
@@ -164,43 +170,66 @@ const Achievements: React.FC<AchievementsProps> = ({ onLinkHover, onLinkLeave })
           const Icon = item.icon;
           return (
             <motion.div key={aIdx} whileHover={{ y: -4 }}>
-              <TiltCard maxRotate={8} className="p-6 border-white/10 bg-[#101017]/90 flex items-center justify-between">
-                <div className="space-y-2 max-w-sm">
-                  <span
-                    className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider"
-                    style={{ backgroundColor: `${item.accent}20`, color: item.accent, border: `1px solid ${item.accent}40` }}
-                  >
-                    {item.category}
-                  </span>
-                  <h4 className="font-bold text-lg text-white font-heading">{item.title}</h4>
-                  <p className="text-xs text-white/60 font-light">{item.description}</p>
+              <TiltCard maxRotate={8} className="p-6 border-white/10 bg-[#101017]/90 h-full flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span
+                      className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider"
+                      style={{ backgroundColor: `${item.accent}20`, color: item.accent, border: `1px solid ${item.accent}40` }}
+                    >
+                      {item.category}
+                    </span>
+                    {item.countTo !== undefined && (
+                      <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10">
+                        <AnimatedCounter to={item.countTo} suffix={item.countSuffix} className="font-mono text-sm font-extrabold text-amber-400" />
+                        <span className="font-mono text-[10px] text-amber-400/80 uppercase font-semibold">{item.countLabel}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <h4 className="font-bold text-lg text-white font-heading leading-snug">{item.title}</h4>
+                  <p className="text-xs text-white/60 font-light leading-relaxed">{item.description}</p>
+
+                  {item.tags && (
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {item.tags.map((tag) => (
+                        <span key={tag} className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-white/70">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <div className="flex items-center gap-2">
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="LeetCode Profile"
-                    className="w-11 h-11 rounded-xl flex items-center justify-center border transition-all hover:scale-105"
-                    style={{ backgroundColor: `${item.accent}15`, borderColor: `${item.accent}40`, color: item.accent }}
-                    onMouseEnter={onLinkHover}
-                    onMouseLeave={onLinkLeave}
-                  >
-                    <Icon size={20} />
-                  </a>
-                  {item.githubRepo && (
+
+                <div className="pt-4 border-t border-white/10 mt-5 flex items-center justify-between">
+                  <span className="font-mono text-[11px] text-white/40 uppercase">VIEW PROFILES & CODE REPO</span>
+                  <div className="flex items-center gap-2">
                     <a
-                      href={item.githubRepo}
+                      href={item.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      title="GitHub Repository"
-                      className="w-11 h-11 rounded-xl flex items-center justify-center border border-white/10 bg-white/5 hover:border-amber-400/50 hover:bg-amber-400/10 text-white/80 hover:text-amber-400 transition-all hover:scale-105"
+                      title="LeetCode Profile"
+                      className="w-9 h-9 rounded-xl flex items-center justify-center border transition-all hover:scale-105"
+                      style={{ backgroundColor: `${item.accent}15`, borderColor: `${item.accent}40`, color: item.accent }}
                       onMouseEnter={onLinkHover}
                       onMouseLeave={onLinkLeave}
                     >
-                      <Github size={20} />
+                      <Icon size={18} />
                     </a>
-                  )}
+                    {item.githubRepo && (
+                      <a
+                        href={item.githubRepo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="GitHub Repository"
+                        className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 bg-white/5 hover:border-amber-400/50 hover:bg-amber-400/10 text-white/80 hover:text-amber-400 transition-all hover:scale-105"
+                        onMouseEnter={onLinkHover}
+                        onMouseLeave={onLinkLeave}
+                      >
+                        <Github size={18} />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </TiltCard>
             </motion.div>
