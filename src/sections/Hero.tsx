@@ -82,7 +82,7 @@ const Hero: React.FC<HeroProps> = ({ onLinkHover, onLinkLeave }) => {
                   </div>
                   <div className="flex items-center gap-3 text-xs font-mono text-white/70">
                     <img src="./image.png" alt="Saveetha Logo" className="w-4 h-4 object-contain rounded-sm" />
-                    <span>Saveetha School of Engg</span>
+                    <span>Saveetha School of Engineering</span>
                   </div>
                   <div className="flex items-center gap-3 text-xs font-mono text-white/70">
                     <Layers size={16} className="text-[#fb4617]" />

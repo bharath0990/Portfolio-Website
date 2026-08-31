@@ -168,7 +168,7 @@ const Intro: React.FC<IntroProps> = ({ onLinkHover, onLinkLeave }) => {
                     <span className="flex items-center gap-1.5 text-amber-400">
                       <Sparkles size={13} /> Oracle Certified
                     </span>
-                    <span>Saveetha Engineering</span>
+                    <span>Saveetha School of Engineering</span>
                   </div>
                 </div>
               </TiltCard>
